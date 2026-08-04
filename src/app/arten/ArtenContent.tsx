@@ -11,7 +11,7 @@ export default function ArtenContent() {
   const { favorites, toggle } = useFavorites(state);
 
   return (
-    <div className="px-5 pt-5">
+    <div className="px-5 pt-5 pb-5">
       <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Meine Arten</h1>
       <p className="text-[14px] text-ink-3 font-[650] mt-1">Wählt, welche Arten als Karten im Pirsch-Deck auf der Startseite erscheinen – auch außerhalb ihrer Jagdzeit</p>
 
