@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { getSpecies } from "@/lib/species";
 import { useActiveState } from "@/components/layout/StateProvider";
+import { StateSheet } from "@/components/layout/StateSheet";
 import { getToday, doy, fmtDateShort } from "@/lib/dates";
 import { Timeline } from "@/components/heute/ConditionList";
 import Link from "next/link";
@@ -14,6 +15,7 @@ const NAME_W = 150;
 export default function KalenderPage() {
   const { now, todayDoy, year } = getToday();
   const { state } = useActiveState();
+  const [stateSheetOpen, setStateSheetOpen] = useState(false);
   const allSpecies = getSpecies(state);
 
   const species = useMemo(() => {
@@ -68,7 +70,17 @@ export default function KalenderPage() {
     <div className="px-5 pt-5">
       <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Kalender</h1>
       <p className="text-[14px] text-ink-3 font-[650] mt-1">
-        {state} · {fmtDateShort(now)}
+        <button
+          onClick={() => setStateSheetOpen(true)}
+          aria-label="Bundesland wählen"
+          className="bg-transparent border-0 cursor-pointer p-0 inline-flex items-center gap-[5px] text-[14px] font-[650] active:opacity-60"
+        >
+          <span className="text-green font-[700] underline underline-offset-[3px] decoration-green/40">{state}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <span> · {fmtDateShort(now)}</span>
       </p>
 
       {/* Day strip */}
@@ -152,6 +164,8 @@ export default function KalenderPage() {
         <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0 mb-3">Nächste Änderungen</h2>
         <Timeline species={allSpecies} todayDoy={todayDoy} year={year} now={now} />
       </section>
+
+      <StateSheet open={stateSheetOpen} onClose={() => setStateSheetOpen(false)} />
     </div>
   );
 }
