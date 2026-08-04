@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Hanseller Pirschpilot – Jagdzeiten NRW",
+  title: "Hanseller Pirschpilot",
   description: "Jagdzeiten auf einen Blick. PWA für Jäger in Nordrhein-Westfalen.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
