@@ -1,26 +1,128 @@
 @import "tailwindcss";
 
+/* ===== Design Tokens ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --forest-900: #10251A;
+  --forest-800: #153322;
+  --forest-700: #1C4630;
+  --forest-600: #255A3D;
+  --forest-500: #2F7049;
+
+  --bg: #F6F3EC;
+  --bg-soft: #FBF9F4;
+  --card: #FFFFFF;
+  --line: #E5DFD3;
+
+  --ink: #16211B;
+  --ink-2: #4B584F;
+  --ink-3: #7C877F;
+
+  --green: #2E7D4F;
+  --green-soft: #E4F1E7;
+  --green-ink: #1E5E39;
+
+  --red: #B5372F;
+  --red-soft: #FAE7E4;
+
+  --orange: #C56A11;
+  --orange-soft: #FCEEDC;
+
+  --grey: #7C877F;
+  --grey-soft: #ECEAE4;
+
+  --r-xl: 26px;
+  --r-lg: 20px;
+  --r-md: 14px;
+
+  --shadow-s: 0 1px 2px rgba(20,40,28,.06), 0 4px 14px rgba(20,40,28,.05);
+  --shadow-m: 0 2px 6px rgba(20,40,28,.07), 0 14px 34px rgba(20,40,28,.10);
+  --shadow-l: 0 20px 50px rgba(16,37,26,.28);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #121A14;
+  --bg-soft: #18221A;
+  --card: #1B271F;
+  --line: #2B3B2F;
+
+  --ink: #E8F0EA;
+  --ink-2: #A9BCAF;
+  --ink-3: #7E9486;
+
+  --green: #3FA36B;
+  --green-soft: #14301F;
+  --green-ink: #7FD9A3;
+
+  --red: #EE7A6E;
+  --red-soft: #3A1F1C;
+
+  --orange: #F0A24B;
+  --orange-soft: #33260F;
+
+  --grey: #8A9A8F;
+  --grey-soft: #232C25;
+
+  --shadow-s: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.28);
+  --shadow-m: 0 2px 6px rgba(0,0,0,.35), 0 14px 34px rgba(0,0,0,.4);
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-green: var(--green);
+  --color-green-soft: var(--green-soft);
+  --color-green-ink: var(--green-ink);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-orange: var(--orange);
+  --color-orange-soft: var(--orange-soft);
+  --color-grey: var(--grey);
+  --color-grey-soft: var(--grey-soft);
+  --color-forest-900: var(--forest-900);
+  --color-forest-800: var(--forest-800);
+  --color-forest-700: var(--forest-700);
+  --color-forest-600: var(--forest-600);
+  --color-forest-500: var(--forest-500);
+  --shadow-s: var(--shadow-s);
+  --shadow-m: var(--shadow-m);
+  --shadow-l: var(--shadow-l);
+  --radius-xl: var(--r-xl);
+  --radius-lg: var(--r-lg);
+  --radius-md: var(--r-md);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ===== Reset ===== */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  min-height: 100dvh;
+}
+
+/* ===== Scrollbar hiding ===== */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* ===== Focus ring ===== */
+:focus-visible {
+  outline: 2px solid #4FA96F;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
 }
