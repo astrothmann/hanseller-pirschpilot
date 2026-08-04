@@ -2,15 +2,16 @@
 
 import { useState, useMemo } from "react";
 import { getSpecies } from "@/lib/species";
+import { useFavorites } from "@/lib/favorites";
 import { getToday, inWin, statusOf, fmtDateShort, periodShort } from "@/lib/dates";
 import { DEFAULT_STATE } from "@/lib/types";
 import { SummaryCard } from "@/components/heute/SummaryCard";
 import { DeckCarousel } from "@/components/heute/DeckCarousel";
 import { JagdbarChips } from "@/components/heute/JagdbarChips";
-import { ConditionList, NoList, Timeline } from "@/components/heute/ConditionList";
+import { ConditionList, NoList } from "@/components/heute/ConditionList";
 import { Sheet } from "@/components/ui/Sheet";
 import { Silhouette } from "@/components/icons/SilhouetteSprite";
-import { CheckIcon, ChevronRight } from "@/components/icons/Icons";
+import { ChevronRight } from "@/components/icons/Icons";
 import Link from "next/link";
 
 export default function HeutePage() {
@@ -19,18 +20,18 @@ export default function HeutePage() {
 
   const { now, todayDoy, year } = getToday();
   const species = getSpecies(DEFAULT_STATE);
+  const { favorites } = useFavorites();
 
   const jagdbar = useMemo(() => species.filter((s) => inWin(s, todayDoy)), [species, todayDoy]);
   const cond = useMemo(() => species.filter((s) => statusOf(s, todayDoy) === "cond"), [species, todayDoy]);
   const no = useMemo(() => species.filter((s) => statusOf(s, todayDoy) === "no"), [species, todayDoy]);
 
-  // Deck species: favorites first, then rest, max 6
+  // Deck shows all selected favorites in order, regardless of season
   const deckSpecies = useMemo(() => {
-    const defaultFavs = ["rehbock", "frischling", "altfuchs", "waschbaer", "damhirsch", "rothirsch"];
-    const favGreen = defaultFavs.map((k) => jagdbar.find((s) => s.k === k)).filter(Boolean) as typeof jagdbar;
-    const rest = jagdbar.filter((s) => !favGreen.includes(s));
-    return [...favGreen, ...rest].slice(0, 6);
-  }, [jagdbar]);
+    return favorites
+      .map((k) => species.find((s) => s.k === k))
+      .filter(Boolean) as typeof species;
+  }, [favorites, species]);
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function HeutePage() {
       <section className="mt-6">
         <div className="px-5 flex items-baseline justify-between mb-2">
           <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0">Pirsch-Deck</h2>
-          <span className="text-[12.5px] text-ink-3 font-[620]">{jagdbar.length} Kategorien</span>
+          <span className="text-[12.5px] text-ink-3 font-[620]">{deckSpecies.length} Kategorien</span>
         </div>
         <DeckCarousel species={deckSpecies} todayDoy={todayDoy} year={year} />
         <div className="text-center text-[12px] text-ink-3/60 font-[580] mt-2">
@@ -99,24 +100,6 @@ export default function HeutePage() {
         </div>
         {noOpen && <NoList species={no} />}
       </section>
-
-      {/* Timeline */}
-      <section className="mt-6 mb-4">
-        <div className="px-5 mb-2">
-          <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0">Nächste Änderungen</h2>
-        </div>
-        <Timeline species={species} todayDoy={todayDoy} year={year} now={now} />
-      </section>
-
-      {/* Legal */}
-      <div className="mx-5 mb-6 flex gap-3 px-4 py-[14px] rounded-[var(--r-md)] bg-[#EFEADF] border border-[#E0D8C7] text-[#4A4436] text-[12.5px] font-[620] leading-[1.45] [data-theme='dark']:bg-[#1E2618] [data-theme='dark']:border-[#2C3726] [data-theme='dark']:text-[#B9AE8D]">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8A7A55" strokeWidth="2.3" strokeLinecap="round" className="shrink-0 mt-[1px]">
-          <circle cx="12" cy="12" r="9" /><path d="M12 11v5.5" />
-        </svg>
-        <p className="m-0">
-          Die Anzeige zeigt allgemeine landesweite Jagdzeiten. Örtliche Anordnungen, Schutzgebiete und Elterntierschutz können abweichen.
-        </p>
-      </div>
 
       {/* All sheet */}
       <Sheet

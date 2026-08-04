@@ -1,10 +1,20 @@
 "use client";
 
 import { useRef, useCallback, useEffect } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import type { Species } from "@/lib/types";
-import { periodShort, metaFor } from "@/lib/dates";
-import { CheckIcon } from "@/components/icons/Icons";
+import { periodShort, metaFor, statusOf } from "@/lib/dates";
+import { CheckIcon, CrossIcon, BangIcon } from "@/components/icons/Icons";
+
+const BADGE: Record<
+  "ok" | "cond" | "no",
+  { pill: string; circle: string; label: string; Icon: (p: { color: string; size?: number }) => ReactNode }
+> = {
+  ok: { pill: "bg-green-soft text-green-ink", circle: "bg-green", label: "JAGDZEIT", Icon: CheckIcon },
+  cond: { pill: "bg-orange-soft text-orange", circle: "bg-orange", label: "BEDINGT", Icon: BangIcon },
+  no: { pill: "bg-grey-soft text-ink-3", circle: "bg-grey", label: "NICHT JAGDBAR", Icon: CrossIcon },
+};
 
 export function DeckCarousel({
   species,
@@ -75,39 +85,24 @@ export function DeckCarousel({
       onClickCapture={onClickCapture}
     >
       {species.map((s) => {
-        const isHero = s.hero;
+        const badge = BADGE[statusOf(s, todayDoy)];
         return (
           <Link
             key={s.k}
             href={`/wildart/${s.k}/`}
             draggable={false}
-            className={`snap-start shrink-0 rounded-[var(--r-xl)] p-[18px] flex flex-col no-underline transition-transform active:scale-[.975] relative overflow-hidden ${
-              isHero
-                ? "basis-[296px] h-[246px] text-[#EDF5EF] border-0"
-                : "basis-[274px] h-[246px] text-ink border border-line bg-card"
-            } lg:basis-[290px] lg:h-[258px]`}
-            style={{
-              background: isHero
-                ? "linear-gradient(160deg,#28613F 0%,#173B27 60%,#102A1C 100%)"
-                : undefined,
-              boxShadow: "var(--shadow-m)",
-            }}
+            className="snap-start shrink-0 rounded-[var(--r-xl)] p-[18px] flex flex-col no-underline transition-transform active:scale-[.975] relative overflow-hidden basis-[274px] h-[246px] text-ink border border-line bg-card lg:basis-[290px] lg:h-[258px]"
+            style={{ boxShadow: "var(--shadow-m)" }}
           >
             <div className="text-[26px] font-[830] tracking-[-0.8px] mt-[3px] mb-3">{s.n}</div>
-            <div className={`inline-flex items-center gap-[9px] self-start px-[13px] py-2 pr-[13px] pl-[10px] rounded-full text-[13.5px] font-[800] tracking-[0.6px] ${
-              isHero
-                ? "bg-[rgba(115,224,158,.16)] text-[#8DEBB4]"
-                : "bg-green-soft text-green-ink"
-            }`}>
-              <span className="w-5 h-5 rounded-full bg-green grid place-items-center">
-                <CheckIcon color="#fff" size={11} />
+            <div className={`inline-flex items-center gap-[9px] self-start px-[13px] py-2 pr-[13px] pl-[10px] rounded-full text-[13.5px] font-[800] tracking-[0.6px] ${badge.pill}`}>
+              <span className={`w-5 h-5 rounded-full grid place-items-center ${badge.circle}`}>
+                <badge.Icon color="#fff" size={11} />
               </span>
-              JAGDZEIT
+              {badge.label}
             </div>
             <div className="mt-auto text-[17px] font-[750] tracking-[-0.3px]">{periodShort(s)}</div>
-            <div className={`text-[13px] font-[600] mt-[3px] ${
-              isHero ? "text-[#A8C9B5]" : "text-ink-3"
-            }`}>
+            <div className="text-[13px] font-[600] mt-[3px] text-ink-3">
               {metaFor(s, todayDoy, year)}
             </div>
           </Link>

@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { getSpecies } from "@/lib/species";
 import { DEFAULT_STATE } from "@/lib/types";
 import { getToday, doy, fmtDateShort } from "@/lib/dates";
+import { Timeline } from "@/components/heute/ConditionList";
 import Link from "next/link";
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
@@ -12,6 +13,7 @@ const NAME_W = 150;
 
 export default function KalenderPage() {
   const { now, todayDoy, year } = getToday();
+  const allSpecies = getSpecies(DEFAULT_STATE);
 
   const species = useMemo(() => {
     const all = getSpecies(DEFAULT_STATE);
@@ -133,13 +135,11 @@ export default function KalenderPage() {
         </div>
       </section>
 
-      {/* Legal */}
-      <div className="mt-6 mb-6 flex gap-3 px-4 py-[14px] rounded-[var(--r-md)] bg-[#EFEADF] border border-[#E0D8C7] text-[#4A4436] text-[12.5px] font-[620] leading-[1.45]">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8A7A55" strokeWidth="2.3" strokeLinecap="round" className="shrink-0 mt-[1px]">
-          <circle cx="12" cy="12" r="9" /><path d="M12 11v5.5" />
-        </svg>
-        <p className="m-0">Örtliche Anordnungen, Schutzgebiete und Elterntierschutz können abweichen.</p>
-      </div>
+      {/* Next changes */}
+      <section className="mt-6">
+        <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0 mb-3">Nächste Änderungen</h2>
+        <Timeline species={allSpecies} todayDoy={todayDoy} year={year} now={now} />
+      </section>
     </div>
   );
 }

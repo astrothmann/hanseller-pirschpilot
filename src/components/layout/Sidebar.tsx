@@ -31,7 +31,7 @@ export function Sidebar() {
           <Silhouette icon="deer" size={24} fill="#8DEBB4" />
         </div>
         <div>
-          <div className="text-[16.5px] font-[820] tracking-[-0.4px]">Pirschpilot</div>
+          <div className="text-[15px] font-[820] tracking-[-0.4px] whitespace-nowrap">Hanseller Pirschpilot</div>
           <div className="text-[12px] font-[600] text-[#8DAFAB] tracking-[-0.1px]">Nordrhein-Westfalen</div>
         </div>
       </div>

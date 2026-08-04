@@ -24,8 +24,6 @@ export interface Species {
   note?: string;
   /** Whether this species should appear in the deck by default */
   deck?: boolean;
-  /** Whether this is a hero (featured) card in the deck */
-  hero?: boolean;
 }
 
 export type Status = "ok" | "cond" | "no";
