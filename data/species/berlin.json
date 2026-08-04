@@ -95,8 +95,7 @@
         31
       ]
     ],
-    "src": "JagdzeitV § 1 Nr. 2",
-    "deck": true
+    "src": "JagdzeitV § 1 Nr. 2"
   },
   {
     "k": "damwild-alttier",
@@ -258,8 +257,7 @@
       ]
     ],
     "src": "§ 2 JagdA/ZV BE · § 22 (4) BJG",
-    "hint": "Elterntierschutz beachten",
-    "deck": true
+    "hint": "Elterntierschutz beachten"
   },
   {
     "k": "keiler",
@@ -277,7 +275,8 @@
     ],
     "src": "§ 2 JagdA/ZV BE · § 22 (4) BJG",
     "cond": true,
-    "hint": "Führende Bachen sind geschont"
+    "hint": "Führende Bachen sind geschont",
+    "deck": true
   },
   {
     "k": "ueberlaeufer",
@@ -417,8 +416,7 @@
       ]
     ],
     "src": "§ 2 JagdA/ZV BE",
-    "note": "Seit 22.08.2025 ganzjährig (Dritte ÄndVO JagdA/ZV BE)",
-    "deck": true
+    "note": "Seit 22.08.2025 ganzjährig (Dritte ÄndVO JagdA/ZV BE)"
   },
   {
     "k": "jungwaschbaer",

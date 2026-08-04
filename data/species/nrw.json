@@ -85,8 +85,7 @@
         31
       ]
     ],
-    "src": "§ 1 Nr. 2 LJZeitVO",
-    "deck": true
+    "src": "§ 1 Nr. 2 LJZeitVO"
   },
   {
     "k": "damwild-alttier",
@@ -276,8 +275,7 @@
       ]
     ],
     "src": "§ 1 Nr. 5 LJZeitVO",
-    "hint": "Elterntierschutz beachten",
-    "deck": true
+    "hint": "Elterntierschutz beachten"
   },
   {
     "k": "keiler",
@@ -295,7 +293,8 @@
     ],
     "src": "§ 1 Nr. 5 u. Abs. 3 LJZeitVO · § 22 (4) BJG",
     "cond": true,
-    "hint": "Führende Bachen sind geschont"
+    "hint": "Führende Bachen sind geschont",
+    "deck": true
   },
   {
     "k": "ueberlaeufer",
@@ -447,8 +446,7 @@
         28
       ]
     ],
-    "src": "§ 1 Nr. 14 LJZeitVO",
-    "deck": true
+    "src": "§ 1 Nr. 14 LJZeitVO"
   },
   {
     "k": "jungwaschbaer",

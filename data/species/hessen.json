@@ -79,8 +79,7 @@
         31
       ]
     ],
-    "src": "§ 2 Abs. 2 HJagdV",
-    "deck": true
+    "src": "§ 2 Abs. 2 HJagdV"
   },
   {
     "k": "damwild-alttier",
@@ -266,8 +265,7 @@
       ]
     ],
     "src": "JagdzeitV § 1 Abs. 2 · § 22 (4) BJG",
-    "hint": "Elterntierschutz beachten",
-    "deck": true
+    "hint": "Elterntierschutz beachten"
   },
   {
     "k": "keiler",
@@ -285,7 +283,8 @@
     ],
     "src": "JagdzeitV § 1 Abs. 2 · § 22 (4) BJG",
     "cond": true,
-    "hint": "Führende Bachen sind geschont"
+    "hint": "Führende Bachen sind geschont",
+    "deck": true
   },
   {
     "k": "ueberlaeufer",
@@ -442,8 +441,7 @@
       ]
     ],
     "src": "§ 2 Abs. 1 HJagdV",
-    "note": "Seit 01.04.2026 ganzjährig (GVBl. 2026 Nr. 14)",
-    "deck": true
+    "note": "Seit 01.04.2026 ganzjährig (GVBl. 2026 Nr. 14)"
   },
   {
     "k": "jungwaschbaer",

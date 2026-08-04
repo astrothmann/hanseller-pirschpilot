@@ -19,22 +19,33 @@ export default function KalenderPage() {
   const species = useMemo(() => {
     const all = getSpecies(state);
     // Filter out year-long species (single window spanning ~365 days)
-    return all
-      .filter((s) => {
-        if (s.win.length === 0) return false;
-        // keep species whose total hunting window < 360 days
-        const total = s.win.reduce((sum, w) => {
-          const a = doy(w[0], w[1]);
-          const b = doy(w[2], w[3]);
-          return sum + (b >= a ? b - a : year - a + b);
-        }, 0);
-        return total < 360;
-      })
-      .sort((a, b) => {
-        const aStart = doy(a.win[0][0], a.win[0][1]);
-        const bStart = doy(b.win[0][0], b.win[0][1]);
-        return aStart - bStart;
-      });
+    const filtered = all.filter((s) => {
+      if (s.win.length === 0) return false;
+      // keep species whose total hunting window < 360 days
+      const total = s.win.reduce((sum, w) => {
+        const a = doy(w[0], w[1]);
+        const b = doy(w[2], w[3]);
+        return sum + (b >= a ? b - a : year - a + b);
+      }, 0);
+      return total < 360;
+    });
+    const groupOf = (s: (typeof filtered)[number]) => s.grp.split(" · ").pop() ?? s.grp;
+    const startOf = (s: (typeof filtered)[number]) => doy(s.win[0][0], s.win[0][1]);
+    // Earliest season start per group, so groups stay together in chronological order
+    const groupStart: Record<string, number> = {};
+    for (const s of filtered) {
+      const g = groupOf(s);
+      const st = startOf(s);
+      groupStart[g] = Math.min(groupStart[g] ?? Infinity, st);
+    }
+    return [...filtered].sort((a, b) => {
+      const ga = groupOf(a);
+      const gb = groupOf(b);
+      if (ga !== gb) {
+        return (groupStart[ga] - groupStart[gb]) || ga.localeCompare(gb);
+      }
+      return startOf(a) - startOf(b);
+    });
   }, [state, year]);
 
   const y = now.getFullYear();

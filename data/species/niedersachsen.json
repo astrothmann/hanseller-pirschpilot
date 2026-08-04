@@ -85,8 +85,7 @@
         31
       ]
     ],
-    "src": "§ 3 Nr. 2 c DVO-NJagdG",
-    "deck": true
+    "src": "§ 3 Nr. 2 c DVO-NJagdG"
   },
   {
     "k": "damwild-alttier",
@@ -272,8 +271,7 @@
       ]
     ],
     "src": "JagdzeitV § 1 Abs. 2 · § 22 (4) BJG",
-    "hint": "Elterntierschutz beachten",
-    "deck": true
+    "hint": "Elterntierschutz beachten"
   },
   {
     "k": "keiler",
@@ -291,7 +289,8 @@
     ],
     "src": "JagdzeitV § 1 Abs. 2 · § 22 (4) BJG",
     "cond": true,
-    "hint": "Führende Bachen sind geschont"
+    "hint": "Führende Bachen sind geschont",
+    "deck": true
   },
   {
     "k": "ueberlaeufer",
@@ -443,8 +442,7 @@
         31
       ]
     ],
-    "src": "§ 2 Nr. 1 DVO-NJagdG",
-    "deck": true
+    "src": "§ 2 Nr. 1 DVO-NJagdG"
   },
   {
     "k": "jungwaschbaer",
