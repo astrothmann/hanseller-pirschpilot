@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Silhouette } from "../icons/SilhouetteSprite";
+import { WildartIcon } from "../icons/WildartIcon";
 import { useActiveState } from "./StateProvider";
 
 const NAV = [
@@ -26,11 +26,11 @@ export function Sidebar() {
       style={{ background: "linear-gradient(180deg,#1B3D29 0%,#10281A 60%,#0C1F14 100%)" }}
       aria-label="Hauptnavigation"
     >
-      <div className="flex items-center gap-3 px-[18px] pt-6 pb-4">
-        <div className="w-[42px] h-[42px] rounded-[13px] grid place-items-center"
-          style={{ background: "linear-gradient(160deg,#28613F 0%,#173B27 100%)", boxShadow: "0 6px 18px rgba(0,0,0,.35)" }}>
-          <Silhouette icon="deer" size={24} fill="#8DEBB4" />
-        </div>
+       <div className="flex items-center gap-3 px-[18px] pt-6 pb-4">
+         <div className="w-[42px] h-[42px] rounded-[13px] grid place-items-center"
+           style={{ background: "linear-gradient(160deg,#28613F 0%,#173B27 100%)", boxShadow: "0 6px 18px rgba(0,0,0,.35)" }}>
+           <WildartIcon icon="deer" size={24} />
+         </div>
         <div>
           <div className="text-[15px] font-[820] tracking-[-0.4px] whitespace-nowrap">Hanseller Pirschpilot</div>
           <div className="text-[12px] font-[600] text-[#8DAFAB] tracking-[-0.1px]">{state}</div>

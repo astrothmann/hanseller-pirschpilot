@@ -3,7 +3,7 @@
 import { getSpecies } from "@/lib/species";
 import { useActiveState } from "@/components/layout/StateProvider";
 import { useFavorites } from "@/lib/favorites";
-import { Silhouette } from "@/components/icons/SilhouetteSprite";
+import { WildartIcon } from "@/components/icons/WildartIcon";
 
 export default function ArtenContent() {
   const { state } = useActiveState();
@@ -25,9 +25,9 @@ export default function ArtenContent() {
                  key={s.k}
                  className="flex items-center gap-3 w-full py-[10px] text-left text-ink"
                >
-                 <span className="w-[36px] h-[36px] rounded-[12px] bg-grey-soft grid place-items-center shrink-0">
-                   <Silhouette icon={s.ic} size={20} fill="var(--ink-2)" />
-                 </span>
+                  <span className="w-[36px] h-[36px] rounded-[12px] bg-grey-soft grid place-items-center shrink-0">
+                    <WildartIcon icon={s.ic} size={20} />
+                  </span>
                  <span className="flex-1 text-[15px] font-[710]">{s.n}</span>
                  {/* Clickable toggle button */}
                  <button

@@ -8,7 +8,7 @@ import {
   getToday, statusOf, inWin, isYearLong, isProtected,
   periodFull, metaFor, doy, fmtDateShort,
 } from "@/lib/dates";
-import { Silhouette } from "@/components/icons/SilhouetteSprite";
+import { WildartIcon } from "@/components/icons/WildartIcon";
 import { CheckIcon, CrossIcon, BangIcon, ArrowLeft } from "@/components/icons/Icons";
 
 function YearBar({ species, todayDoy, year }: { species: Species; todayDoy: number; year: number }) {
@@ -65,7 +65,7 @@ export default function WildartDetailContent({ slug }: { slug: string }) {
     return (
       <div className="flex flex-col min-h-full">
         <div className="relative px-[22px] pb-[26px] text-[#EAF3EC] overflow-hidden"
-          style={{ background: "linear-gradient(160deg,#4B5563 0%,#2A303A 55%,#161A20 100%)", paddingTop: "calc(56px + env(safe-area-inset-top, 0px))" }}>
+          style={{ background: "linear-gradient(to right,#161A20 0%,#2A303A 40%,#4B5563 100%)", paddingTop: "calc(56px + env(safe-area-inset-top, 0px))" }}>
           <a
             href="/"
             onClick={goBack}
@@ -76,7 +76,7 @@ export default function WildartDetailContent({ slug }: { slug: string }) {
           >
             <ArrowLeft size={18} />
           </a>
-          {any && <Silhouette icon={any.ic} size={190} fill="#fff" className="absolute right-[-24px] bottom-[-24px] opacity-[.16]" />}
+           {any && <WildartIcon icon={any.ic} size={160} className="absolute right-4 bottom-4 opacity-[.25]" />}
           <div className="text-[34px] font-[850] tracking-[-1.2px] mt-[14px] mb-1 relative">{any?.n ?? slug}</div>
           <div className="text-[14px] text-[#B6D2C1] font-[650] relative">
             {state} · Heute, {fmtDateShort(now)}
@@ -126,11 +126,11 @@ export default function WildartDetailContent({ slug }: { slug: string }) {
   if (!s.hint && !isRed) notes.push("Elterntierschutz beachten");
   notes.push("Örtliche Anordnungen und Schutzgebiete können abweichen");
 
-  const toneGradient = isRed
-    ? "linear-gradient(160deg,#7A2C26 0%,#4A1C18 60%,#2A100E 100%)"
-    : isCond
-    ? "linear-gradient(160deg,#8A4C0E 0%,#553009 60%,#2E1A05 100%)"
-    : "linear-gradient(160deg,#28613F 0%,#173B27 55%,#0F281B 100%)";
+   const toneGradient = isRed
+     ? "linear-gradient(to right,#2A100E 0%,#4A1C18 40%,#7A2C26 100%)"
+     : isCond
+     ? "linear-gradient(to right,#2E1A05 0%,#553009 40%,#8A4C0E 100%)"
+     : "linear-gradient(to right,#0F281B 0%,#173B27 45%,#28613F 100%)";
 
   const badgeBg = isRed ? "bg-red" : isCond ? "bg-orange" : "bg-green";
 
@@ -154,7 +154,7 @@ export default function WildartDetailContent({ slug }: { slug: string }) {
         >
            <ArrowLeft size={18} />
         </a>
-        <Silhouette icon={s.ic} size={190} fill="#fff" className="absolute right-[-24px] bottom-[-24px] opacity-[.16]" />
+         <WildartIcon icon={s.ic} size={160} className="absolute right-4 bottom-4 opacity-[.25]" />
         <div className="text-[34px] font-[850] tracking-[-1.2px] mt-[14px] mb-1 relative">{s.n}</div>
         <div className="text-[14px] text-[#B6D2C1] font-[650] relative">
           {state} · Heute, {fmtDateShort(now)}

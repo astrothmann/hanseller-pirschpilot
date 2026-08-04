@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { SilhouetteSprite } from "@/components/icons/SilhouetteSprite";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Tabbar } from "@/components/layout/Tabbar";
 import { StateProvider } from "@/components/layout/StateProvider";
@@ -42,7 +41,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Tabbar />
             </main>
           </div>
-          <SilhouetteSprite />
         </StateProvider>
       </body>
     </html>

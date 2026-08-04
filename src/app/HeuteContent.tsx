@@ -8,7 +8,7 @@ import { getToday, inWin, statusOf, fmtDateShort, periodShort } from "@/lib/date
 import { SummaryCard } from "@/components/heute/SummaryCard";
 import { DeckCarousel } from "@/components/heute/DeckCarousel";
 import { ConditionList, NoList } from "@/components/heute/ConditionList";
-import { Silhouette } from "@/components/icons/SilhouetteSprite";
+import { WildartIcon } from "@/components/icons/WildartIcon";
 import { ChevronRight } from "@/components/icons/Icons";
 import { BundeslandPicker } from "@/components/layout/BundeslandPicker";
 import Link from "next/link";
@@ -72,7 +72,7 @@ export default function HeuteContent() {
                 className="flex items-center gap-[13px] w-full bg-gradient-to-b from-[#F0F7F2] to-[#E6F0E9] border border-[rgba(46,125,79,.25)] rounded-[var(--r-lg)] p-[14px] shadow-[var(--shadow-s)] no-underline text-ink"
               >
                 <span className="w-[44px] h-[44px] rounded-[14px] bg-green-soft grid place-items-center shrink-0">
-                  <Silhouette icon={s.ic} size={25} fill="var(--green)" />
+                  <WildartIcon icon={s.ic} size={25} />
                 </span>
                 <span className="flex-1 min-w-0">
                   <span className="flex items-center gap-2 text-[15px] font-[750]">

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { Species } from "@/lib/types";
 import { periodShort, doy, dayOffsetDate, fmtDateShort } from "@/lib/dates";
-import { Silhouette } from "@/components/icons/SilhouetteSprite";
+import { WildartIcon } from "@/components/icons/WildartIcon";
 import { CheckIcon, CrossIcon, BangIcon, ChevronRight } from "@/components/icons/Icons";
 
 export function ConditionList({ species }: { species: Species[] }) {
@@ -17,7 +17,7 @@ export function ConditionList({ species }: { species: Species[] }) {
           className="flex items-center gap-[13px] w-full bg-gradient-to-b from-[#FFF9F0] to-[#FFF6EA] border border-[rgba(197,106,17,.25)] rounded-[var(--r-lg)] p-[14px] shadow-[var(--shadow-s)] no-underline text-ink"
         >
           <span className="w-[44px] h-[44px] rounded-[14px] bg-orange-soft grid place-items-center shrink-0">
-            <Silhouette icon={s.ic} size={26} fill="var(--orange)" />
+            <WildartIcon icon={s.ic} size={26} />
           </span>
           <span className="flex-1 min-w-0">
             <span className="flex items-center gap-2 text-[15px] font-[750]">
@@ -48,7 +48,7 @@ export function NoList({ species }: { species: Species[] }) {
           className="flex items-center gap-[13px] w-full bg-gradient-to-b from-[#FBF0EE] to-[#F6E5E1] border border-[rgba(181,55,47,.25)] rounded-[var(--r-lg)] p-[14px] shadow-[var(--shadow-s)] no-underline text-ink"
         >
           <span className="w-[44px] h-[44px] rounded-[14px] bg-red-soft grid place-items-center shrink-0">
-            <Silhouette icon={s.ic} size={25} fill="var(--red)" />
+            <WildartIcon icon={s.ic} size={25} />
           </span>
           <span className="flex-1 min-w-0">
             <span className="flex items-center gap-2 text-[15px] font-[750]">
