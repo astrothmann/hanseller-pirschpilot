@@ -27,7 +27,7 @@ export function ConditionList({ species }: { species: Species[] }) {
               </span>
             </span>
             <span className="text-[13px] text-ink-3 font-[600] block mt-[2px]">
-              {periodShort(s)} · {s.grp.split(" · ")[1] || s.grp}
+              {periodShort(s)}
             </span>
           </span>
           <ChevronRight />
@@ -51,7 +51,6 @@ export function NoList({ species }: { species: Species[] }) {
             <CrossIcon color="var(--red)" size={10} />
           </span>
           <span className="flex-1 text-[14px] font-[680]">{s.n}</span>
-          <span className="text-[12px] text-ink-3 font-[600]">{s.grp.split(" · ")[1] || s.grp}</span>
         </Link>
       ))}
     </div>

@@ -142,7 +142,7 @@ export default function HeutePage() {
                   <span className="text-[10.5px] font-[830] tracking-[0.7px] px-2 py-[3px] rounded-[7px] bg-green text-white">JAGDZEIT</span>
                 </span>
                 <span className="text-[13px] text-ink-3 font-[600] block mt-[2px]">
-                  {periodShort(s)} · {s.grp.split(" · ")[1] || s.grp}
+                  {periodShort(s)}
                 </span>
               </span>
               <ChevronRight />

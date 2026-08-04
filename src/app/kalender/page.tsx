@@ -8,6 +8,7 @@ import Link from "next/link";
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 const WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+const NAME_W = 150;
 
 export default function KalenderPage() {
   const { now, todayDoy, year } = getToday();
@@ -83,7 +84,7 @@ export default function KalenderPage() {
           {/* Today vertical line spanning full chart */}
           <div
             className="absolute top-0 bottom-0 z-10 pointer-events-none w-[2px] rounded-full bg-forest-700 opacity-70 -translate-x-1/2"
-            style={{ left: `calc(90px + 12px + (100% - 90px - 12px) * ${todayPct / 100})` }}
+            style={{ left: `calc(${NAME_W}px + 12px + (100% - ${NAME_W}px - 12px) * ${todayPct / 100})` }}
           />
 
           {/* Species rows */}
@@ -94,7 +95,8 @@ export default function KalenderPage() {
                 href={`/wildart/${s.k}/`}
                 className="flex items-center gap-3 no-underline group"
               >
-                <div className="w-[90px] shrink-0 text-[13px] font-[700] text-ink truncate group-hover:text-green transition-colors">
+                <div className="shrink-0 text-[13px] font-[700] text-ink truncate group-hover:text-green transition-colors"
+                  style={{ width: NAME_W }}>
                   {s.n}
                 </div>
                 <div className="relative flex-1 h-[10px] rounded-full bg-grey-soft overflow-hidden">
@@ -119,7 +121,7 @@ export default function KalenderPage() {
 
           {/* Month axis */}
           <div className="flex items-center gap-3 mt-3">
-            <div className="w-[90px] shrink-0" />
+            <div className="shrink-0" style={{ width: NAME_W }} />
             <div className="flex-1 flex">
               {MONTHS.map((label, i) => (
                 <div key={i} className="flex-1 text-center text-[10px] font-[650] text-ink-3/60">

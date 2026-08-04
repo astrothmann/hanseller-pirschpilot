@@ -93,11 +93,6 @@ export function DeckCarousel({
               boxShadow: "var(--shadow-m)",
             }}
           >
-            <div className={`text-[11.5px] font-[750] tracking-[1.2px] uppercase ${
-              isHero ? "text-[#9FC4AC]" : "text-ink-3"
-            }`}>
-              {s.grp.split(" · ")[1] || s.grp}
-            </div>
             <div className="text-[26px] font-[830] tracking-[-0.8px] mt-[3px] mb-3">{s.n}</div>
             <div className={`inline-flex items-center gap-[9px] self-start px-[13px] py-2 pr-[13px] pl-[10px] rounded-full text-[13.5px] font-[800] tracking-[0.6px] ${
               isHero

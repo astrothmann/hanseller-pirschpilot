@@ -46,30 +46,6 @@ export default function ArtenPage() {
           })}
         </div>
       </div>
-
-      <div className="mt-4 bg-card border border-line rounded-[var(--r-lg)] p-[18px] shadow-[var(--shadow-s)]">
-        <h3 className="m-0 mb-3 text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3">Benachrichtigungen</h3>
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
-              <div className="text-[15px] font-[700]">Beginn einer Jagdzeit</div>
-              <div className="text-[13px] text-ink-3 font-[600]">7 Tage vorher</div>
-            </div>
-            <span className="w-[44px] h-[26px] rounded-full bg-green relative">
-              <span className="absolute top-[3px] left-[21px] w-[20px] h-[20px] rounded-full bg-white shadow-sm" />
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
-              <div className="text-[15px] font-[700]">Ende einer Jagdzeit</div>
-              <div className="text-[13px] text-ink-3 font-[600]">14 Tage vorher</div>
-            </div>
-            <span className="w-[44px] h-[26px] rounded-full bg-green relative">
-              <span className="absolute top-[3px] left-[21px] w-[20px] h-[20px] rounded-full bg-white shadow-sm" />
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
