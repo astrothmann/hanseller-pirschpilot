@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { getSpecies } from "@/lib/species";
 import { useActiveState } from "@/components/layout/StateProvider";
 import { StateSheet } from "@/components/layout/StateSheet";
@@ -18,34 +18,18 @@ export default function KalenderPage() {
   const [stateSheetOpen, setStateSheetOpen] = useState(false);
   const allSpecies = getSpecies(state);
 
-  const species = useMemo(() => {
-    const all = getSpecies(state);
-    // Filter out year-long species (single window spanning ~365 days)
-    return all.filter((s) => {
-      if (s.win.length === 0) return false;
-      // keep species whose total hunting window < 360 days
-      const total = s.win.reduce((sum, w) => {
-        const a = doy(w[0], w[1]);
-        const b = doy(w[2], w[3]);
-        return sum + (b >= a ? b - a : year - a + b);
-      }, 0);
-      return total < 360;
-    });
-  }, [state, year]);
+  const species = allSpecies;
 
   const y = now.getFullYear();
   const m = now.getMonth();
   const days = new Date(y, m + 1, 0).getDate();
 
-  const dayStrip = useMemo(() => {
-    const strip = [];
-    for (let d = 1; d <= days; d++) {
-      const dt = new Date(y, m, d);
-      const isToday = d === now.getDate();
-      strip.push({ d, wd: WD[dt.getDay()], isToday });
-    }
-    return strip;
-  }, [y, m, days, now]);
+  const dayStrip = [];
+  for (let d = 1; d <= days; d++) {
+    const dt = new Date(y, m, d);
+    const isToday = d === now.getDate();
+    dayStrip.push({ d, wd: WD[dt.getDay()], isToday });
+  }
 
   const todayPct = (todayDoy / year) * 100;
 
@@ -109,6 +93,9 @@ export default function KalenderPage() {
                   {s.n}
                 </div>
                 <div className="relative flex-1 h-[10px] rounded-full bg-grey-soft overflow-hidden">
+                  {s.win.length === 0 && (
+                    <div className="absolute inset-0" style={{ background: "repeating-linear-gradient(135deg, rgba(181,55,47,.5) 0 6px, transparent 6px 12px)" }} />
+                  )}
                   {s.win.map((w, i) => {
                     const a = (doy(w[0], w[1]) / year) * 100;
                     const b = (doy(w[2], w[3]) / year) * 100;

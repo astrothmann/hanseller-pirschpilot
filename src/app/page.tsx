@@ -19,6 +19,7 @@ export default function HeutePage() {
   const [allSheetOpen, setAllSheetOpen] = useState(false);
   const [noOpen, setNoOpen] = useState(false);
   const [stateSheetOpen, setStateSheetOpen] = useState(false);
+  const [fitCount, setFitCount] = useState(6);
 
   const { now, todayDoy, year } = getToday();
   const { state } = useActiveState();
@@ -74,8 +75,8 @@ export default function HeutePage() {
           <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0">Heute jagdbar</h2>
           <span className="text-[12.5px] text-ink-3 font-[620]">{jagdbar.length} Kategorien</span>
         </div>
-        <JagdbarChips species={jagdbar} />
-        {jagdbar.length > 6 && (
+        <JagdbarChips species={jagdbar} onFitChange={setFitCount} />
+        {jagdbar.length > fitCount && (
           <button
             onClick={() => setAllSheetOpen(true)}
             className="mx-5 mt-3 text-[14px] text-green font-[720] bg-transparent border-0 cursor-pointer p-0"
