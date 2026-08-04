@@ -21,8 +21,12 @@ const speciesByState: Record<string, Species[]> = {
   "Berlin": berlinData as Species[],
 };
 
+const deCollator = new Intl.Collator("de", { sensitivity: "base" });
+
 export function getSpecies(state: string): Species[] {
-  return speciesByState[state] ?? [];
+  return [...(speciesByState[state] ?? [])].sort(
+    (a, b) => deCollator.compare(a.n, b.n) || a.k.localeCompare(b.k)
+  );
 }
 
 export function getSpeciesByKey(state: string, key: string): Species | undefined {

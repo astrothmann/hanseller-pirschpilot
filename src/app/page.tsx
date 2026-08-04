@@ -29,11 +29,9 @@ export default function HeutePage() {
   const cond = useMemo(() => species.filter((s) => statusOf(s, todayDoy) === "cond"), [species, todayDoy]);
   const no = useMemo(() => species.filter((s) => statusOf(s, todayDoy) === "no"), [species, todayDoy]);
 
-  // Deck shows all selected favorites in order, regardless of season
+  // Deck shows all selected favorites in alphabetical order, regardless of season
   const deckSpecies = useMemo(() => {
-    return favorites
-      .map((k) => species.find((s) => s.k === k))
-      .filter(Boolean) as typeof species;
+    return species.filter((s) => favorites.includes(s.k));
   }, [favorites, species]);
 
   return (
