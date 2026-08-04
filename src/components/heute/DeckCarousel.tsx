@@ -26,13 +26,25 @@ export function DeckCarousel({
   year: number;
 }) {
   const deckRef = useRef<HTMLDivElement>(null);
-  const dragState = useRef({ down: false, startX: 0, scrollLeft: 0, moved: 0 });
+  const dragState = useRef({
+    down: false,
+    startX: 0,
+    scrollLeft: 0,
+    moved: 0,
+    anchor: null as HTMLAnchorElement | null,
+  });
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     if (e.pointerType === "touch") return;
     const deck = deckRef.current;
     if (!deck) return;
-    dragState.current = { down: true, startX: e.clientX, scrollLeft: deck.scrollLeft, moved: 0 };
+    dragState.current = {
+      down: true,
+      startX: e.clientX,
+      scrollLeft: deck.scrollLeft,
+      moved: 0,
+      anchor: (e.target as Element).closest("a") as HTMLAnchorElement | null,
+    };
     deck.style.scrollSnapType = "none";
     deck.style.cursor = "grabbing";
     deck.setPointerCapture(e.pointerId);
@@ -66,11 +78,21 @@ export function DeckCarousel({
   }, []);
 
   const onClickCapture = useCallback((e: React.MouseEvent) => {
-    if (dragState.current.moved > 8) {
+    const { moved, anchor } = dragState.current;
+    if (moved > 8) {
       e.preventDefault();
       e.stopPropagation();
       dragState.current.moved = 0;
+      return;
     }
+    // With setPointerCapture, the click after a tap is retargeted to the scroll
+    // container instead of the card <Link>, so navigate manually.
+    if (!(e.target as Element).closest("a") && anchor) {
+      e.preventDefault();
+      e.stopPropagation();
+      anchor.click();
+    }
+    dragState.current.moved = 0;
   }, []);
 
   return (

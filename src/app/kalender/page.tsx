@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { getSpecies } from "@/lib/species";
-import { DEFAULT_STATE } from "@/lib/types";
+import { useActiveState } from "@/components/layout/StateProvider";
 import { getToday, doy, fmtDateShort } from "@/lib/dates";
 import { Timeline } from "@/components/heute/ConditionList";
 import Link from "next/link";
@@ -13,10 +13,11 @@ const NAME_W = 150;
 
 export default function KalenderPage() {
   const { now, todayDoy, year } = getToday();
-  const allSpecies = getSpecies(DEFAULT_STATE);
+  const { state } = useActiveState();
+  const allSpecies = getSpecies(state);
 
   const species = useMemo(() => {
-    const all = getSpecies(DEFAULT_STATE);
+    const all = getSpecies(state);
     // Filter out year-long species (single window spanning ~365 days)
     return all
       .filter((s) => {
@@ -34,7 +35,7 @@ export default function KalenderPage() {
         const bStart = doy(b.win[0][0], b.win[0][1]);
         return aStart - bStart;
       });
-  }, [year]);
+  }, [state, year]);
 
   const y = now.getFullYear();
   const m = now.getMonth();
@@ -56,7 +57,7 @@ export default function KalenderPage() {
     <div className="px-5 pt-5">
       <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Kalender</h1>
       <p className="text-[14px] text-ink-3 font-[650] mt-1">
-        {DEFAULT_STATE} · {fmtDateShort(now)}
+        {state} · {fmtDateShort(now)}
       </p>
 
       {/* Day strip */}

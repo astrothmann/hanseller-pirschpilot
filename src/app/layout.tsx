@@ -4,6 +4,7 @@ import { SilhouetteSprite } from "@/components/icons/SilhouetteSprite";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Tabbar } from "@/components/layout/Tabbar";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { StateProvider } from "@/components/layout/StateProvider";
 
 export const viewport: Viewport = {
   themeColor: "#1C4630",
@@ -11,7 +12,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Hanseller Pirschpilot",
-  description: "Jagdzeiten auf einen Blick. PWA für Jäger in Nordrhein-Westfalen.",
+  description: "Jagdzeiten auf einen Blick. PWA für Jäger – bundesweit, offline.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
@@ -30,18 +31,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-dvh">
         <ThemeProvider>
-          <SilhouetteSprite />
-          <div className="flex min-h-dvh">
-            <Sidebar />
-            <main className="flex-1 min-w-0 w-full max-w-[1280px] mx-auto flex flex-col h-dvh lg:max-w-[1180px]">
-              <div className="relative flex-1 min-h-0 overflow-hidden">
-                <div className="absolute inset-0 overflow-y-auto pb-12 no-scrollbar">
-                  {children}
+          <StateProvider>
+            <SilhouetteSprite />
+            <div className="flex min-h-dvh">
+              <Sidebar />
+              <main className="flex-1 min-w-0 w-full max-w-[1280px] mx-auto flex flex-col h-dvh lg:max-w-[1180px]">
+                <div className="relative flex-1 min-h-0 overflow-hidden">
+                  <div className="absolute inset-0 overflow-y-auto pb-12 no-scrollbar">
+                    {children}
+                  </div>
                 </div>
-              </div>
-              <Tabbar />
-            </main>
-          </div>
+                <Tabbar />
+              </main>
+            </div>
+          </StateProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 import type { Species } from "@/lib/types";
-import { DEFAULT_STATE } from "@/lib/types";
+import { getSpeciesByKey, getSpeciesByKeyAnyState } from "@/lib/species";
+import { useActiveState } from "@/components/layout/StateProvider";
 import {
-  getToday, statusOf, inWin, isYearLong,
+  getToday, statusOf, inWin, isYearLong, isProtected,
   periodFull, metaFor, doy, fmtDateShort,
 } from "@/lib/dates";
 import { Silhouette } from "@/components/icons/SilhouetteSprite";
 import { CheckIcon, CrossIcon, BangIcon, ArrowLeft } from "@/components/icons/Icons";
 
 function YearBar({ species, todayDoy, year }: { species: Species; todayDoy: number; year: number }) {
-  if (isYearLong(species)) return null;
+  if (isYearLong(species) || isProtected(species)) return null;
   return (
     <div className="mt-[14px]">
       <div className="relative h-3 rounded-full bg-grey-soft overflow-hidden">
@@ -43,8 +44,56 @@ function YearBar({ species, todayDoy, year }: { species: Species; todayDoy: numb
   );
 }
 
-export function WildartDetail({ species: s }: { species: Species }) {
+export function WildartDetail({ slug }: { slug: string }) {
+  const { state } = useActiveState();
   const { now, todayDoy, year } = getToday();
+
+  const s = getSpeciesByKey(state, slug);
+  if (!s) {
+    const any = getSpeciesByKeyAnyState(slug);
+    return (
+      <div className="flex flex-col min-h-full">
+        <div className="relative px-[22px] pt-14 pb-[26px] text-[#EAF3EC] overflow-hidden"
+          style={{ background: "linear-gradient(160deg,#4B5563 0%,#2A303A 55%,#161A20 100%)" }}>
+          <Link
+            href="/"
+            className="absolute top-[14px] left-[14px] w-[38px] h-[38px] rounded-full grid place-items-center z-[3] text-[#EAF3EC] no-underline active:scale-[.92]"
+            style={{ background: "rgba(255,255,255,.14)" }}
+            aria-label="Zurück"
+          >
+            <ArrowLeft size={18} />
+          </Link>
+          {any && <Silhouette icon={any.ic} size={190} fill="#fff" className="absolute right-[-24px] bottom-[-24px] opacity-[.16]" />}
+          <div className="text-[34px] font-[850] tracking-[-1.2px] mt-[14px] mb-1 relative">{any?.n ?? slug}</div>
+          <div className="text-[14px] text-[#B6D2C1] font-[650] relative">
+            {state} · Heute, {fmtDateShort(now)}
+          </div>
+          <div className="inline-flex items-center gap-[10px] mt-[18px] px-[18px] py-[11px] pl-3 rounded-full text-[16px] font-[800] tracking-[0.3px] relative"
+            style={{ background: "rgba(255,255,255,.14)" }}>
+            <span className="w-5 h-5 rounded-full grid place-items-center bg-[#6B7280]">
+              <CrossIcon color="#fff" size={13} />
+            </span>
+            Keine Jagdzeit
+          </div>
+        </div>
+
+        <div className="mx-5 mt-4 bg-card border border-line rounded-[var(--r-lg)] p-[18px] shadow-[var(--shadow-s)]">
+          <h3 className="m-0 mb-3 text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3">Hinweise</h3>
+          <ul className="list-none m-0 p-0 space-y-[10px]">
+            <li className="flex gap-[10px] text-[14.5px] font-[660] leading-[1.42]">
+              <BangIcon size={17} />
+              <span>Für diese Art ist im Bundesland {state} keine Jagdzeit hinterlegt.</span>
+            </li>
+            <li className="flex gap-[10px] text-[14.5px] font-[660] leading-[1.42]">
+              <BangIcon size={17} />
+              <span>Örtliche Anordnungen und Schutzgebiete können abweichen</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
+
   const st = statusOf(s, todayDoy);
   const isRed = st === "no";
   const isCond = st === "cond";
@@ -59,8 +108,6 @@ export function WildartDetail({ species: s }: { species: Species }) {
     : "Nach allgemeiner Jagdzeit des Bundeslandes: Jagdzeit.";
 
   const notes: string[] = [];
-  if (isCond)
-    notes.push("Ganzjährige Bejagung bis 31.01.2028 vorbehaltlich § 22 (4) BJG – führende Bachen mit Frischlingen unter 25 kg sind geschont");
   if (s.hint) notes.push(s.hint);
   if (s.note) notes.push(s.note);
   if (!s.hint && !isRed) notes.push("Elterntierschutz beachten");
@@ -95,7 +142,7 @@ export function WildartDetail({ species: s }: { species: Species }) {
         <Silhouette icon={s.ic} size={190} fill="#fff" className="absolute right-[-24px] bottom-[-24px] opacity-[.16]" />
         <div className="text-[34px] font-[850] tracking-[-1.2px] mt-[14px] mb-1 relative">{s.n}</div>
         <div className="text-[14px] text-[#B6D2C1] font-[650] relative">
-          {DEFAULT_STATE} · Heute, {fmtDateShort(now)}
+          {state} · Heute, {fmtDateShort(now)}
         </div>
         <div className="inline-flex items-center gap-[10px] mt-[18px] px-[18px] py-[11px] pl-3 rounded-full text-[16px] font-[800] tracking-[0.3px] relative"
           style={{ background: "rgba(255,255,255,.14)" }}>

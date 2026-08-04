@@ -1,0 +1,440 @@
+[
+  {
+    "k": "rehbock",
+    "n": "Rehwild · Bock",
+    "sub": "Bock · adultes Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Rehwild",
+    "win": [
+      [
+        4,
+        1,
+        5,
+        31
+      ],
+      [
+        8,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "hint": "Elterntierschutz beachten",
+    "note": "Seit 22.08.2025 (Dritte ÄndVO JagdA/ZV BE)",
+    "deck": true
+  },
+  {
+    "k": "ricke",
+    "n": "Rehwild · Ricke",
+    "sub": "weibliches Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Rehwild",
+    "win": [
+      [
+        9,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "note": "Seit 22.08.2025 (Dritte ÄndVO JagdA/ZV BE)"
+  },
+  {
+    "k": "rehkitz",
+    "n": "Rehwild · Kitz",
+    "sub": "Jungtier",
+    "ic": "deer",
+    "grp": "Schalenwild · Rehwild",
+    "win": [
+      [
+        9,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "note": "Seit 22.08.2025 (Dritte ÄndVO JagdA/ZV BE)"
+  },
+  {
+    "k": "schmalreh",
+    "n": "Rehwild · Schmalreh",
+    "sub": "junges weibliches Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Rehwild",
+    "win": [
+      [
+        4,
+        1,
+        5,
+        31
+      ],
+      [
+        8,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "note": "Seit 22.08.2025 (Dritte ÄndVO JagdA/ZV BE)"
+  },
+  {
+    "k": "damhirsch",
+    "n": "Damwild · Hirsch",
+    "sub": "Hirsch · adultes Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Damwild",
+    "win": [
+      [
+        9,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 2",
+    "deck": true
+  },
+  {
+    "k": "damwild-alttier",
+    "n": "Damwild · Alttier",
+    "sub": "weibliches Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Damwild",
+    "win": [
+      [
+        9,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 2"
+  },
+  {
+    "k": "damkitz",
+    "n": "Damwild · Kitz",
+    "sub": "Jungtier",
+    "ic": "deer",
+    "grp": "Schalenwild · Damwild",
+    "win": [
+      [
+        9,
+        1,
+        2,
+        28
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 2"
+  },
+  {
+    "k": "damwild-schmalspiesser",
+    "n": "Damwild · Schmalspießer",
+    "sub": "junger Hirsch",
+    "ic": "deer",
+    "grp": "Schalenwild · Damwild",
+    "win": [
+      [
+        7,
+        1,
+        2,
+        28
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 2"
+  },
+  {
+    "k": "damwild-schmaltier",
+    "n": "Damwild · Schmaltier",
+    "sub": "junges weibliches Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Damwild",
+    "win": [
+      [
+        7,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 2"
+  },
+  {
+    "k": "rothirsch",
+    "n": "Rotwild · Hirsch",
+    "sub": "Hirsch · adultes Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Rotwild",
+    "win": [
+      [
+        8,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 1",
+    "deck": true
+  },
+  {
+    "k": "rotwild-alttier",
+    "n": "Rotwild · Alttier",
+    "sub": "weibliches Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Rotwild",
+    "win": [
+      [
+        8,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 1"
+  },
+  {
+    "k": "rotkitz",
+    "n": "Rotwild · Kitz",
+    "sub": "Jungtier",
+    "ic": "deer",
+    "grp": "Schalenwild · Rotwild",
+    "win": [
+      [
+        8,
+        1,
+        2,
+        28
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 1"
+  },
+  {
+    "k": "rotwild-schmalspiesser",
+    "n": "Rotwild · Schmalspießer",
+    "sub": "junger Hirsch",
+    "ic": "deer",
+    "grp": "Schalenwild · Rotwild",
+    "win": [
+      [
+        6,
+        1,
+        2,
+        28
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 1"
+  },
+  {
+    "k": "rotwild-schmaltier",
+    "n": "Rotwild · Schmaltier",
+    "sub": "junges weibliches Stück",
+    "ic": "deer",
+    "grp": "Schalenwild · Rotwild",
+    "win": [
+      [
+        6,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 1"
+  },
+  {
+    "k": "frischling",
+    "n": "Schwarzwild · Frischling",
+    "sub": "noch nicht einjähriges Stück",
+    "ic": "boar",
+    "grp": "Schwarzwild",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE · § 22 (4) BJG",
+    "hint": "Elterntierschutz beachten",
+    "deck": true
+  },
+  {
+    "k": "keiler",
+    "n": "Schwarzwild · Keiler",
+    "sub": "adultes Stück",
+    "ic": "boar",
+    "grp": "Schwarzwild",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE · § 22 (4) BJG",
+    "cond": true,
+    "hint": "Führende Bachen sind geschont"
+  },
+  {
+    "k": "ueberlaeufer",
+    "n": "Schwarzwild · Überläufer",
+    "sub": "ein- bis zweijähriges Stück",
+    "ic": "boar",
+    "grp": "Schwarzwild",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE · § 22 (4) BJG",
+    "cond": true,
+    "hint": "Führende Bachen sind geschont"
+  },
+  {
+    "k": "bache",
+    "n": "Schwarzwild · Bache",
+    "sub": "weibliches Stück",
+    "ic": "boar",
+    "grp": "Schwarzwild",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE · § 22 (4) BJG",
+    "cond": true,
+    "hint": "Nicht führende Bachen ganzjährig · führende Bachen 01.10. – 31.01."
+  },
+  {
+    "k": "fasan",
+    "n": "Fasan",
+    "sub": "Federwild · Bodenwild",
+    "ic": "fasan",
+    "grp": "Federwild",
+    "win": [
+      [
+        10,
+        1,
+        1,
+        15
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 14"
+  },
+  {
+    "k": "stockente",
+    "n": "Stockente",
+    "sub": "Federwild · Wassergeflügel",
+    "ic": "duck",
+    "grp": "Federwild",
+    "win": [
+      [
+        9,
+        1,
+        1,
+        15
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 21"
+  },
+  {
+    "k": "altfuchs",
+    "n": "Fuchs",
+    "sub": "adultes Tier · Jungfüchse 01.05. – 31.01.",
+    "ic": "fox",
+    "grp": "Raubwild",
+    "win": [
+      [
+        11,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "hint": "Elterntierschutz beachten",
+    "deck": true
+  },
+  {
+    "k": "jungfuchs",
+    "n": "Fuchs · Jungtier",
+    "sub": "Jungfüchse",
+    "ic": "fox",
+    "grp": "Raubwild",
+    "win": [
+      [
+        5,
+        1,
+        1,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "dachs",
+    "n": "Dachs",
+    "sub": "adultes Tier · Jungdachse ganzjährig geschont",
+    "ic": "badger",
+    "grp": "Raubwild",
+    "win": [],
+    "src": "§ 3 JagdA/ZV BE",
+    "note": "Ganzjährig geschont – Jagdzeit aufgehoben (§ 3 JagdA/ZV BE)"
+  },
+  {
+    "k": "jungdachs",
+    "n": "Dachs · Jungtier",
+    "sub": "Jungdachse",
+    "ic": "badger",
+    "grp": "Raubwild",
+    "win": [],
+    "src": "§ 3 JagdA/ZV BE",
+    "note": "Ganzjährig geschont – Jagdzeit aufgehoben (§ 3 JagdA/ZV BE)"
+  },
+  {
+    "k": "waschbaer",
+    "n": "Waschbär",
+    "sub": "adultes Tier · Jungtiere ganzjährig",
+    "ic": "raccoon",
+    "grp": "Neozoon",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "note": "Seit 22.08.2025 ganzjährig (Dritte ÄndVO JagdA/ZV BE)",
+    "deck": true
+  },
+  {
+    "k": "jungwaschbaer",
+    "n": "Waschbär · Jungtier",
+    "sub": "Jungwaschbären",
+    "ic": "raccoon",
+    "grp": "Neozoon",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "hint": "Elterntierschutz beachten"
+  }
+]

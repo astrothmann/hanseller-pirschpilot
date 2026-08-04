@@ -1,19 +1,24 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { getSpecies } from "@/lib/species";
-import { DEFAULT_STATE } from "@/lib/types";
+import { useActiveState } from "@/components/layout/StateProvider";
 import { doy, inPeriod, getToday, fmtDateShort } from "@/lib/dates";
 import { CheckIcon, CrossIcon, BangIcon } from "@/components/icons/Icons";
 import Link from "next/link";
 
 export default function PruefenPage() {
-  const species = getSpecies(DEFAULT_STATE);
+  const { state } = useActiveState();
+  const species = getSpecies(state);
   const { now } = getToday();
   const todayISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
   const [selectedKey, setSelectedKey] = useState(species[0]?.k ?? "");
   const [dateStr, setDateStr] = useState(todayISO);
+
+  useEffect(() => {
+    setSelectedKey((k) => (species.some((s) => s.k === k) ? k : (species[0]?.k ?? "")));
+  }, [species]);
 
   const result = useMemo(() => {
     const s = species.find((sp) => sp.k === selectedKey);
@@ -70,7 +75,7 @@ export default function PruefenPage() {
 
         <label className="block text-[13px] font-[700] text-ink-2 mb-1">Bundesland</label>
         <div className="p-3 rounded-[var(--r-md)] border border-line bg-grey-soft text-ink text-[15px] font-[680] mb-4">
-          {DEFAULT_STATE}
+          {state}
         </div>
       </div>
 

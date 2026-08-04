@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { DEFAULT_STATE, STATES } from "@/lib/types";
 import { useTheme } from "@/components/layout/ThemeProvider";
+import { useActiveState } from "@/components/layout/StateProvider";
+import { SUPPORTED_STATES } from "@/lib/species";
 import { Sheet } from "@/components/ui/Sheet";
 import { CheckIcon } from "@/components/icons/Icons";
 
 export default function MehrPage() {
   const { theme, toggle: toggleTheme } = useTheme();
+  const { state, setState } = useActiveState();
   const [stateSheetOpen, setStateSheetOpen] = useState(false);
-  const [currentState, setCurrentState] = useState(DEFAULT_STATE);
 
   return (
     <div className="px-5 pt-5">
@@ -28,7 +29,7 @@ export default function MehrPage() {
             <path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" />
           </svg>
           <span className="flex-1 text-[15px] font-[710]">Bundesland ändern</span>
-          <span className="text-[13px] text-ink-3 font-[600]">{currentState}</span>
+          <span className="text-[13px] text-ink-3 font-[600]">{state}</span>
         </button>
 
         {/* Dark mode */}
@@ -69,22 +70,22 @@ export default function MehrPage() {
         open={stateSheetOpen}
         onClose={() => setStateSheetOpen(false)}
         title="Bundesland wählen"
-        subtitle="Jagdzeiten sind Landesrecht. Aktuell hinterlegt: Nordrhein-Westfalen."
+        subtitle={`Jagdzeiten sind Landesrecht. Aktuell hinterlegt: ${state}.`}
       >
         <div className="grid grid-cols-2 gap-[9px]">
-          {STATES.map((state) => {
-            const sel = state === currentState;
+          {SUPPORTED_STATES.map((stateName) => {
+            const sel = stateName === state;
             return (
               <button
-                key={state}
-                onClick={() => { setCurrentState(state); setStateSheetOpen(false); }}
+                key={stateName}
+                onClick={() => { setState(stateName); setStateSheetOpen(false); }}
                 className={`p-[14px] rounded-[15px] border text-left text-[14.5px] font-[710] cursor-pointer flex items-center justify-between gap-2 active:scale-[.97] transition-transform ${
                   sel
                     ? "bg-forest-700 text-[#EAF3EC] border-forest-700"
                     : "bg-card border-line text-ink"
                 }`}
               >
-                {state}
+                {stateName}
                 {sel && <CheckIcon color="#8DEBB4" size={13} />}
               </button>
             );

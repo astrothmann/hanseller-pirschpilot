@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react";
 import { getSpecies } from "@/lib/species";
 import { useFavorites } from "@/lib/favorites";
+import { useActiveState } from "@/components/layout/StateProvider";
 import { getToday, inWin, statusOf, fmtDateShort, periodShort } from "@/lib/dates";
-import { DEFAULT_STATE } from "@/lib/types";
 import { SummaryCard } from "@/components/heute/SummaryCard";
 import { DeckCarousel } from "@/components/heute/DeckCarousel";
 import { JagdbarChips } from "@/components/heute/JagdbarChips";
@@ -19,8 +19,9 @@ export default function HeutePage() {
   const [noOpen, setNoOpen] = useState(false);
 
   const { now, todayDoy, year } = getToday();
-  const species = getSpecies(DEFAULT_STATE);
-  const { favorites } = useFavorites();
+  const { state } = useActiveState();
+  const species = getSpecies(state);
+  const { favorites } = useFavorites(state);
 
   const jagdbar = useMemo(() => species.filter((s) => inWin(s, todayDoy)), [species, todayDoy]);
   const cond = useMemo(() => species.filter((s) => statusOf(s, todayDoy) === "cond"), [species, todayDoy]);
@@ -39,7 +40,7 @@ export default function HeutePage() {
       <div className="px-5 pt-5 pb-2">
         <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Hanseller Pirschpilot</h1>
         <p className="text-[14px] text-ink-3 font-[650] mt-1">
-          {DEFAULT_STATE} <span className="text-ink-3/50 mx-1">·</span> Heute, {fmtDateShort(now)}
+          {state} <span className="text-ink-3/50 mx-1">·</span> Heute, {fmtDateShort(now)}
         </p>
       </div>
 
@@ -106,7 +107,7 @@ export default function HeutePage() {
         open={allSheetOpen}
         onClose={() => setAllSheetOpen(false)}
         title="Heute in Jagdzeit"
-        subtitle={`${jagdbar.length} Kategorien · ${DEFAULT_STATE} · ${fmtDateShort(now)}`}
+        subtitle={`${jagdbar.length} Kategorien · ${state} · ${fmtDateShort(now)}`}
       >
         <div className="space-y-[9px]">
           {jagdbar.map((s) => (

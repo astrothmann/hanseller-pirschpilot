@@ -1,14 +1,15 @@
 "use client";
 
 import { getSpecies } from "@/lib/species";
-import { DEFAULT_STATE } from "@/lib/types";
+import { useActiveState } from "@/components/layout/StateProvider";
 import { useFavorites } from "@/lib/favorites";
 import { Silhouette } from "@/components/icons/SilhouetteSprite";
 import { CheckIcon } from "@/components/icons/Icons";
 
 export default function ArtenPage() {
-  const species = getSpecies(DEFAULT_STATE);
-  const { favorites, toggle } = useFavorites();
+  const { state } = useActiveState();
+  const species = getSpecies(state);
+  const { favorites, toggle } = useFavorites(state);
 
   return (
     <div className="px-5 pt-5">

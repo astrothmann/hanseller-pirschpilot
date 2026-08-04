@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Silhouette } from "../icons/SilhouetteSprite";
+import { useActiveState } from "./StateProvider";
 
 const NAV = [
   { label: "Heute", href: "/", icon: <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /> },
@@ -19,6 +20,7 @@ function isActive(pathname: string, href: string) {
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { state } = useActiveState();
 
   return (
     <aside className="hidden lg:flex w-[264px] shrink-0 h-dvh sticky top-0 flex-col text-[#DCEBE1]"
@@ -32,7 +34,7 @@ export function Sidebar() {
         </div>
         <div>
           <div className="text-[15px] font-[820] tracking-[-0.4px] whitespace-nowrap">Hanseller Pirschpilot</div>
-          <div className="text-[12px] font-[600] text-[#8DAFAB] tracking-[-0.1px]">Nordrhein-Westfalen</div>
+          <div className="text-[12px] font-[600] text-[#8DAFAB] tracking-[-0.1px]">{state}</div>
         </div>
       </div>
 

@@ -1,8 +1,24 @@
-import type { Species } from "./types";
+import type { Species, BundeslandName } from "./types";
 import nrwData from "../../data/species/nrw.json";
+import niedersachsenData from "../../data/species/niedersachsen.json";
+import hessenData from "../../data/species/hessen.json";
+import brandenburgData from "../../data/species/brandenburg.json";
+import berlinData from "../../data/species/berlin.json";
+
+export const SUPPORTED_STATES: BundeslandName[] = [
+  "Nordrhein-Westfalen",
+  "Niedersachsen",
+  "Hessen",
+  "Brandenburg",
+  "Berlin",
+];
 
 const speciesByState: Record<string, Species[]> = {
   "Nordrhein-Westfalen": nrwData as Species[],
+  "Niedersachsen": niedersachsenData as Species[],
+  "Hessen": hessenData as Species[],
+  "Brandenburg": brandenburgData as Species[],
+  "Berlin": berlinData as Species[],
 };
 
 export function getSpecies(state: string): Species[] {
@@ -23,4 +39,22 @@ export function getByKey(state: string): Record<string, Species> {
     map[s.k] = s;
   }
   return map;
+}
+
+export function getAllKeysAcrossStates(): string[] {
+  const keys: string[] = [];
+  for (const state of SUPPORTED_STATES) {
+    for (const s of getSpecies(state)) {
+      if (!keys.includes(s.k)) keys.push(s.k);
+    }
+  }
+  return keys;
+}
+
+export function getSpeciesByKeyAnyState(key: string): Species | undefined {
+  for (const state of SUPPORTED_STATES) {
+    const s = getSpeciesByKey(state, key);
+    if (s) return s;
+  }
+  return undefined;
 }

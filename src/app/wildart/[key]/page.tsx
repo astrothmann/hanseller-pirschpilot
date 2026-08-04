@@ -1,27 +1,26 @@
-import { getSpecies, getSpeciesByKey } from "@/lib/species";
-import { DEFAULT_STATE } from "@/lib/types";
+import { getAllKeysAcrossStates, getSpeciesByKeyAnyState } from "@/lib/species";
 import { WildartDetail } from "./WildartDetail";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
-  return getSpecies(DEFAULT_STATE).map((s) => ({ key: s.k }));
+  return getAllKeysAcrossStates().map((key) => ({ key }));
 }
 
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
-  const s = getSpeciesByKey(DEFAULT_STATE, key);
+  const s = getSpeciesByKeyAnyState(key);
   if (!s) return { title: "Nicht gefunden" };
   return {
     title: `${s.n} – Hanseller Pirschpilot`,
-    description: `Jagdzeit-Status für ${s.n} in ${DEFAULT_STATE}`,
+    description: `Jagdzeit-Status für ${s.n}`,
   };
 }
 
 export default async function WildartPage({ params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
-  const species = getSpeciesByKey(DEFAULT_STATE, key);
-  if (!species) notFound();
-  return <WildartDetail species={species} />;
+  const s = getSpeciesByKeyAnyState(key);
+  if (!s) notFound();
+  return <WildartDetail slug={key} />;
 }

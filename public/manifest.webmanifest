@@ -1,7 +1,7 @@
 {
   "name": "Hanseller Pirschpilot",
   "short_name": "Pirschpilot",
-  "description": "Jagdzeiten NRW auf einen Blick",
+  "description": "Jagdzeiten auf einen Blick – offline, für alle Bundesländer",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

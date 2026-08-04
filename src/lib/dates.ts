@@ -41,6 +41,10 @@ export function isYearLong(s: Species): boolean {
   );
 }
 
+export function isProtected(s: Species): boolean {
+  return s.win.length === 0;
+}
+
 const pad2 = (n: number) => String(n).padStart(2, "0");
 
 export function fmtWin(w: HuntingWindow, short: boolean): string {
@@ -49,16 +53,19 @@ export function fmtWin(w: HuntingWindow, short: boolean): string {
 }
 
 export function periodShort(s: Species): string {
+  if (isProtected(s)) return "Ganzjährig geschont";
   if (isYearLong(s)) return "Ganzjährig*";
   return s.win.map((w) => fmtWin(w, true)).join("  /  ");
 }
 
 export function periodFull(s: Species): string {
+  if (isProtected(s)) return "Ganzjährig geschont";
   if (isYearLong(s)) return "Ganzjährig";
   return s.win.map((w) => fmtWin(w, false)).join(" und ");
 }
 
 export function metaFor(s: Species, todayDoy: number, year: number): string {
+  if (isProtected(s)) return "Ganzjährig geschont";
   if (isYearLong(s)) return "Ganzjährig bejagbar";
   if (inWin(s, todayDoy)) {
     let best = Infinity;

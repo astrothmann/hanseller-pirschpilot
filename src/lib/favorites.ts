@@ -1,20 +1,23 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { getSpecies } from "@/lib/species";
 
-const DEFAULT_FAVS = ["rehbock", "frischling", "altfuchs", "waschbaer", "damhirsch", "rothirsch"];
+function deckDefaults(state: string): string[] {
+  return getSpecies(state).filter((s) => s.deck).map((s) => s.k);
+}
 
-export function useFavorites() {
-  const [favorites, setFavorites] = useState<string[]>(DEFAULT_FAVS);
+export function useFavorites(state: string) {
+  const [favorites, setFavorites] = useState<string[]>(() => deckDefaults(state));
 
   useEffect(() => {
     try {
       const v = JSON.parse(localStorage.getItem("jd-fav") || "null");
-      if (Array.isArray(v)) setFavorites(v);
+      setFavorites(Array.isArray(v) ? v : deckDefaults(state));
     } catch {
-      /* ignore */
+      setFavorites(deckDefaults(state));
     }
-  }, []);
+  }, [state]);
 
   const toggle = useCallback((key: string) => {
     setFavorites((prev) => {
