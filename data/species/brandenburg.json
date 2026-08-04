@@ -433,5 +433,54 @@
     ],
     "src": "§ 5 Abs. 2 Nr. 5 BbgJagdDV",
     "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "feldhase",
+    "n": "Feldhase",
+    "sub": "Niederwild · Haarwild",
+    "ic": "hare",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        10,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 5 Abs. 2 Nr. 5 BbgJagdDV"
+  },
+  {
+    "k": "wildkaninchen",
+    "n": "Wildkaninchen",
+    "sub": "Niederwild · Haarwild",
+    "ic": "kaninchen",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Abs. 2 · § 22 (4) BJG",
+    "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "waldschnepfe",
+    "n": "Waldschnepfe",
+    "sub": "Federwild · Watvogel",
+    "ic": "schnepfe",
+    "grp": "Federwild",
+    "win": [
+      [
+        10,
+        16,
+        1,
+        15
+      ]
+    ],
+    "src": "JagdzeitV § 1 Nr. 23"
   }
 ]

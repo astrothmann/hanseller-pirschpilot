@@ -4,6 +4,7 @@ import { SilhouetteSprite } from "@/components/icons/SilhouetteSprite";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Tabbar } from "@/components/layout/Tabbar";
 import { StateProvider } from "@/components/layout/StateProvider";
+import { HistoryTracker } from "@/components/layout/HistoryTracker";
 
 export const viewport: Viewport = {
   themeColor: "#1C4630",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-dvh">
         <StateProvider>
+          <HistoryTracker />
           <SilhouetteSprite />
           <div className="flex min-h-dvh">
             <Sidebar />

@@ -459,5 +459,56 @@
     ],
     "src": "§ 2 Abs. 1 HJagdV",
     "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "feldhase",
+    "n": "Feldhase",
+    "sub": "Niederwild · Haarwild",
+    "ic": "hare",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        10,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 2 Abs. 2 HJagdV",
+    "note": "Bejagung nur bei ausreichenden Besatzdichten (§ 2 Abs. 4 HJagdV)"
+  },
+  {
+    "k": "wildkaninchen",
+    "n": "Wildkaninchen",
+    "sub": "Niederwild · Haarwild",
+    "ic": "kaninchen",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        1,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "JagdzeitV § 1 Abs. 2 · § 22 (4) BJG",
+    "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "waldschnepfe",
+    "n": "Waldschnepfe",
+    "sub": "Federwild · Watvogel",
+    "ic": "schnepfe",
+    "grp": "Federwild",
+    "win": [
+      [
+        10,
+        16,
+        1,
+        15
+      ]
+    ],
+    "src": "§ 2 Abs. 2 HJagdV",
+    "note": "Wieder Jagdzeit seit 01.04.2026 (GVBl. 2026 Nr. 14)"
   }
 ]

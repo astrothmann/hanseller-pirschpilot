@@ -434,5 +434,42 @@
     ],
     "src": "§ 2 JagdA/ZV BE",
     "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "feldhase",
+    "n": "Feldhase",
+    "sub": "Niederwild · Haarwild",
+    "ic": "hare",
+    "grp": "Niederwild · Haarwild",
+    "win": [],
+    "src": "§ 3 JagdA/ZV BE",
+    "note": "Ganzjährig geschont – Jagdzeit aufgehoben (§ 3 JagdA/ZV BE)"
+  },
+  {
+    "k": "wildkaninchen",
+    "n": "Wildkaninchen",
+    "sub": "Niederwild · Haarwild",
+    "ic": "kaninchen",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        9,
+        1,
+        2,
+        15
+      ]
+    ],
+    "src": "§ 2 JagdA/ZV BE",
+    "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "waldschnepfe",
+    "n": "Waldschnepfe",
+    "sub": "Federwild · Watvogel",
+    "ic": "schnepfe",
+    "grp": "Federwild",
+    "win": [],
+    "src": "§ 3 JagdA/ZV BE",
+    "note": "Ganzjährig geschont – Jagdzeit aufgehoben (§ 3 JagdA/ZV BE)"
   }
 ]

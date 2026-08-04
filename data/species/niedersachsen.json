@@ -460,5 +460,54 @@
     ],
     "src": "§ 2 Nr. 1 DVO-NJagdG",
     "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "feldhase",
+    "n": "Feldhase",
+    "sub": "Niederwild · Haarwild",
+    "ic": "hare",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        10,
+        1,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 3 Nr. 5 DVO-NJagdG"
+  },
+  {
+    "k": "wildkaninchen",
+    "n": "Wildkaninchen",
+    "sub": "Niederwild · Haarwild · Jungkaninchen ganzjährig",
+    "ic": "kaninchen",
+    "grp": "Niederwild · Haarwild",
+    "win": [
+      [
+        10,
+        1,
+        2,
+        15
+      ]
+    ],
+    "src": "§ 3 Nr. 6 DVO-NJagdG",
+    "hint": "Elterntierschutz beachten"
+  },
+  {
+    "k": "waldschnepfe",
+    "n": "Waldschnepfe",
+    "sub": "Federwild · Watvogel",
+    "ic": "schnepfe",
+    "grp": "Federwild",
+    "win": [
+      [
+        10,
+        16,
+        12,
+        31
+      ]
+    ],
+    "src": "§ 3 DVO-NJagdG"
   }
 ]

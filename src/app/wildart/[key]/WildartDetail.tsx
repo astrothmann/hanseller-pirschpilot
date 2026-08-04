@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { Species } from "@/lib/types";
 import { getSpeciesByKey, getSpeciesByKeyAnyState } from "@/lib/species";
 import { useActiveState } from "@/components/layout/StateProvider";
@@ -47,6 +47,16 @@ function YearBar({ species, todayDoy, year }: { species: Species; todayDoy: numb
 export function WildartDetail({ slug }: { slug: string }) {
   const { state } = useActiveState();
   const { now, todayDoy, year } = getToday();
+  const router = useRouter();
+
+  const goBack = () => {
+    const prev = sessionStorage.getItem("jd-prev");
+    if (prev && window.history.length > 1) {
+      router.back();
+    } else {
+      router.replace("/");
+    }
+  };
 
   const s = getSpeciesByKey(state, slug);
   if (!s) {
@@ -55,14 +65,14 @@ export function WildartDetail({ slug }: { slug: string }) {
       <div className="flex flex-col min-h-full">
         <div className="relative px-[22px] pt-14 pb-[26px] text-[#EAF3EC] overflow-hidden"
           style={{ background: "linear-gradient(160deg,#4B5563 0%,#2A303A 55%,#161A20 100%)" }}>
-          <Link
-            href="/"
-            className="absolute top-[14px] left-[14px] w-[38px] h-[38px] rounded-full grid place-items-center z-[3] text-[#EAF3EC] no-underline active:scale-[.92]"
+          <button
+            onClick={goBack}
+            className="absolute top-[14px] left-[14px] w-[38px] h-[38px] rounded-full grid place-items-center z-[3] text-[#EAF3EC] no-underline active:scale-[.92] border-0 p-0 cursor-pointer"
             style={{ background: "rgba(255,255,255,.14)" }}
             aria-label="Zurück"
           >
             <ArrowLeft size={18} />
-          </Link>
+          </button>
           {any && <Silhouette icon={any.ic} size={190} fill="#fff" className="absolute right-[-24px] bottom-[-24px] opacity-[.16]" />}
           <div className="text-[34px] font-[850] tracking-[-1.2px] mt-[14px] mb-1 relative">{any?.n ?? slug}</div>
           <div className="text-[14px] text-[#B6D2C1] font-[650] relative">
@@ -131,14 +141,14 @@ export function WildartDetail({ slug }: { slug: string }) {
     <div className="flex flex-col min-h-full">
       {/* Hero */}
       <div className="relative px-[22px] pt-14 pb-[26px] text-[#EAF3EC] overflow-hidden" style={{ background: toneGradient }}>
-        <Link
-          href="/"
-          className="absolute top-[14px] left-[14px] w-[38px] h-[38px] rounded-full grid place-items-center z-[3] text-[#EAF3EC] no-underline active:scale-[.92]"
+        <button
+          onClick={goBack}
+          className="absolute top-[14px] left-[14px] w-[38px] h-[38px] rounded-full grid place-items-center z-[3] text-[#EAF3EC] no-underline active:scale-[.92] border-0 p-0 cursor-pointer"
           style={{ background: "rgba(255,255,255,.14)" }}
           aria-label="Zurück"
         >
           <ArrowLeft size={18} />
-        </Link>
+        </button>
         <Silhouette icon={s.ic} size={190} fill="#fff" className="absolute right-[-24px] bottom-[-24px] opacity-[.16]" />
         <div className="text-[34px] font-[850] tracking-[-1.2px] mt-[14px] mb-1 relative">{s.n}</div>
         <div className="text-[14px] text-[#B6D2C1] font-[650] relative">
