@@ -13,7 +13,7 @@ export function JagdbarChips({
   onFitChange?: (count: number) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [fit, setFit] = useState(0);
+  const [fit, setFit] = useState(Infinity);
 
   useEffect(() => {
     const container = containerRef.current;

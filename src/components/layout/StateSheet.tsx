@@ -22,6 +22,7 @@ export function StateSheet({ open, onClose }: { open: boolean; onClose: () => vo
             <button
               key={stateName}
               onClick={() => { setState(stateName); onClose(); }}
+              onTouchEnd={(e) => { e.preventDefault(); setState(stateName); onClose(); }}
               className={`p-[14px] rounded-[15px] border text-left text-[14.5px] font-[710] cursor-pointer flex items-center justify-between gap-2 active:scale-[.97] transition-transform ${
                 sel
                   ? "bg-forest-700 text-[#EAF3EC] border-forest-700"

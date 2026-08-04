@@ -40,17 +40,26 @@ export function ConditionList({ species }: { species: Species[] }) {
 export function NoList({ species }: { species: Species[] }) {
   if (species.length === 0) return null;
   return (
-    <div className="px-5 space-y-1">
+    <div className="px-5 space-y-[10px]">
       {species.map((s) => (
         <Link
           key={s.k}
           href={`/wildart/${s.k}/`}
-          className="flex items-center gap-3 py-[9px] no-underline text-ink"
+          className="flex items-center gap-[13px] w-full bg-gradient-to-b from-[#FBF0EE] to-[#F6E5E1] border border-[rgba(181,55,47,.25)] rounded-[var(--r-lg)] p-[14px] shadow-[var(--shadow-s)] no-underline text-ink"
         >
-          <span className="w-[30px] h-[30px] rounded-[10px] bg-red-soft grid place-items-center shrink-0">
-            <CrossIcon color="var(--red)" size={10} />
+          <span className="w-[44px] h-[44px] rounded-[14px] bg-red-soft grid place-items-center shrink-0">
+            <Silhouette icon={s.ic} size={25} fill="var(--red)" />
           </span>
-          <span className="flex-1 text-[14px] font-[680]">{s.n}</span>
+          <span className="flex-1 min-w-0">
+            <span className="flex items-center gap-2 text-[15px] font-[750]">
+              {s.n}
+              <span className="text-[10.5px] font-[830] tracking-[0.7px] px-2 py-[3px] rounded-[7px] bg-red text-white">SCHONZEIT</span>
+            </span>
+            <span className="text-[13px] text-ink-3 font-[600] block mt-[2px]">
+              {periodShort(s)}
+            </span>
+          </span>
+          <ChevronRight />
         </Link>
       ))}
     </div>
