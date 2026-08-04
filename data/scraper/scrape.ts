@@ -1,5 +1,5 @@
 /**
- * Jagd-Deck Scraper
+ * Hanseller Pirschpilot Scraper
  *
  * Scrapes hunting season data from schonzeiten.de for a given Bundesland
  * and outputs a structured JSON file.

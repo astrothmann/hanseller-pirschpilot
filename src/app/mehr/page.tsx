@@ -54,25 +54,13 @@ export default function MehrPage() {
         </div>
       </div>
 
-      <div className="mt-4 bg-card border border-line rounded-[var(--r-lg)] p-[18px] shadow-[var(--shadow-s)]">
-        <h3 className="m-0 mb-3 text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3">Rechtliches</h3>
-        <button className="flex items-center w-full py-3 bg-transparent border-0 cursor-pointer text-left text-ink border-b border-line">
-          <span className="flex-1 text-[15px] font-[710]">Haftungsausschluss</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="m9 18 6-6-6-6" /></svg>
-        </button>
-        <button className="flex items-center w-full py-3 bg-transparent border-0 cursor-pointer text-left text-ink">
-          <span className="flex-1 text-[15px] font-[710]">Impressum</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="m9 18 6-6-6-6" /></svg>
-        </button>
-      </div>
-
       {/* Legal */}
       <div className="mt-4 mb-6 flex gap-3 px-4 py-[14px] rounded-[var(--r-md)] bg-[#EFEADF] border border-[#E0D8C7] text-[#4A4436] text-[12.5px] font-[620] leading-[1.45]">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8A7A55" strokeWidth="2.3" strokeLinecap="round" className="shrink-0 mt-[1px]">
           <circle cx="12" cy="12" r="9" /><path d="M12 11v5.5" />
         </svg>
         <p className="m-0">
-          Jagd-Deck ersetzt keine Rechtsauskunft. Maßgeblich sind die geltenden Verordnungen des Landes sowie örtliche Anordnungen.
+          Hanseller Pirschpilot ersetzt keine Rechtsauskunft. Maßgeblich sind die geltenden Verordnungen des Landes sowie örtliche Anordnungen.
         </p>
       </div>
 

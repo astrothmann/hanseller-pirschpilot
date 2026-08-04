@@ -1,9 +1,9 @@
 "use client";
 
+import { useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import type { Species } from "@/lib/types";
 import { periodShort, metaFor } from "@/lib/dates";
-import { Silhouette } from "@/components/icons/SilhouetteSprite";
 import { CheckIcon } from "@/components/icons/Icons";
 
 export function DeckCarousel({
@@ -15,16 +15,73 @@ export function DeckCarousel({
   todayDoy: number;
   year: number;
 }) {
+  const deckRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({ down: false, startX: 0, scrollLeft: 0, moved: 0 });
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.pointerType === "touch") return;
+    const deck = deckRef.current;
+    if (!deck) return;
+    dragState.current = { down: true, startX: e.clientX, scrollLeft: deck.scrollLeft, moved: 0 };
+    deck.style.scrollSnapType = "none";
+    deck.style.cursor = "grabbing";
+    deck.setPointerCapture(e.pointerId);
+  }, []);
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragState.current.down) return;
+    const deck = deckRef.current;
+    if (!deck) return;
+    const dx = e.clientX - dragState.current.startX;
+    dragState.current.moved = Math.abs(dx);
+    deck.scrollLeft = dragState.current.scrollLeft - dx;
+  }, []);
+
+  const onPointerEnd = useCallback((e: React.PointerEvent) => {
+    if (!dragState.current.down) return;
+    dragState.current.down = false;
+    const deck = deckRef.current;
+    if (!deck) return;
+    deck.style.scrollSnapType = "x mandatory";
+    deck.style.cursor = "grab";
+    // Snap to nearest card
+    const cards = [...deck.children] as HTMLElement[];
+    let best = 0;
+    let bd = Infinity;
+    cards.forEach((c, i) => {
+      const d = Math.abs(c.offsetLeft - deck.scrollLeft - 20);
+      if (d < bd) { bd = d; best = i; }
+    });
+    deck.scrollTo({ left: cards[best].offsetLeft - 20, behavior: "smooth" });
+  }, []);
+
+  const onClickCapture = useCallback((e: React.MouseEvent) => {
+    if (dragState.current.moved > 8) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragState.current.moved = 0;
+    }
+  }, []);
+
   return (
-    <div className="flex gap-[14px] overflow-x-auto snap-x snap-mandatory px-5 py-[2px] pb-[6px] cursor-grab no-scrollbar"
-      style={{ scrollPaddingLeft: "20px" }}>
+    <div
+      ref={deckRef}
+      className="flex gap-[14px] overflow-x-auto snap-x snap-mandatory px-5 py-[2px] pb-[6px] cursor-grab no-scrollbar select-none"
+      style={{ scrollPaddingLeft: "20px" }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
+      onClickCapture={onClickCapture}
+    >
       {species.map((s) => {
         const isHero = s.hero;
         return (
           <Link
             key={s.k}
             href={`/wildart/${s.k}/`}
-            className={`snap-start shrink-0 rounded-[var(--r-xl)] p-[18px] flex flex-col no-underline transition-transform active:scale-[.975] ${
+            draggable={false}
+            className={`snap-start shrink-0 rounded-[var(--r-xl)] p-[18px] flex flex-col no-underline transition-transform active:scale-[.975] relative overflow-hidden ${
               isHero
                 ? "basis-[296px] h-[246px] text-[#EDF5EF] border-0"
                 : "basis-[274px] h-[246px] text-ink border border-line bg-card"
@@ -36,12 +93,6 @@ export function DeckCarousel({
               boxShadow: "var(--shadow-m)",
             }}
           >
-            <Silhouette
-              icon={s.ic}
-              size={isHero ? 150 : 132}
-              fill={isHero ? "#fff" : "#1C4630"}
-              className="absolute right-[-24px] bottom-[-24px] opacity-[.16] pointer-events-none"
-            />
             <div className={`text-[11.5px] font-[750] tracking-[1.2px] uppercase ${
               isHero ? "text-[#9FC4AC]" : "text-ink-3"
             }`}>

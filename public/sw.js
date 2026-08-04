@@ -1,6 +1,6 @@
-/* Jagd-Deck · Service Worker v2
+/* Hanseller Pirschpilot · Service Worker v2
    Network-first for HTML pages, cache-first for assets. */
-const VERSION = "jagd-deck-v2";
+const VERSION = "pirschpilot-v1";
 const CACHE = VERSION;
 
 self.addEventListener("install", (event) => {

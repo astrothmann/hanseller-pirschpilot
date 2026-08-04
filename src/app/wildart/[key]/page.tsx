@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   const s = getSpeciesByKey(DEFAULT_STATE, key);
   if (!s) return { title: "Nicht gefunden" };
   return {
-    title: `${s.n} – Jagd-Deck`,
+    title: `${s.n} – Pirschpilot`,
     description: `Jagdzeit-Status für ${s.n} in ${DEFAULT_STATE}`,
   };
 }

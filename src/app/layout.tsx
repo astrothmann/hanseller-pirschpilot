@@ -10,13 +10,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Jagd-Deck – Jagdzeiten NRW",
+  title: "Hanseller Pirschpilot – Jagdzeiten NRW",
   description: "Jagdzeiten auf einen Blick. PWA für Jäger in Nordrhein-Westfalen.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Jagd-Deck",
+    title: "Pirschpilot",
   },
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Sidebar />
             <main className="flex-1 min-w-0 w-full max-w-[1280px] mx-auto flex flex-col h-dvh lg:max-w-[1180px]">
               <div className="relative flex-1 min-h-0 overflow-hidden">
-                <div className="absolute inset-0 overflow-y-auto overflow-x-hidden pb-12 no-scrollbar">
+                <div className="absolute inset-0 overflow-y-auto pb-12 no-scrollbar">
                   {children}
                 </div>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export function Sheet({
   open,
@@ -16,6 +17,9 @@ export function Sheet({
   children: React.ReactNode;
 }) {
   const sheetRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!open) return;
@@ -26,7 +30,9 @@ export function Sheet({
     return () => window.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <>
       {/* Scrim */}
       <div
@@ -56,6 +62,7 @@ export function Sheet({
           {children}
         </div>
       </div>
-    </>
+    </>,
+    document.body
   );
 }

@@ -36,7 +36,7 @@ export default function HeutePage() {
     <>
       {/* Header */}
       <div className="px-5 pt-5 pb-2">
-        <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Jagd-Deck</h1>
+        <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Hanseller Pirschpilot</h1>
         <p className="text-[14px] text-ink-3 font-[650] mt-1">
           {DEFAULT_STATE} <span className="text-ink-3/50 mx-1">·</span> Heute, {fmtDateShort(now)}
         </p>
@@ -48,7 +48,7 @@ export default function HeutePage() {
       {/* Deck */}
       <section className="mt-6">
         <div className="px-5 flex items-baseline justify-between mb-2">
-          <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0">Jagd-Deck</h2>
+          <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0">Pirsch-Deck</h2>
           <span className="text-[12.5px] text-ink-3 font-[620]">{jagdbar.length} Kategorien</span>
         </div>
         <DeckCarousel species={deckSpecies} todayDoy={todayDoy} year={year} />
