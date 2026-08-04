@@ -124,7 +124,7 @@ export function WildartDetail({ slug }: { slug: string }) {
   const verdictClasses = isRed
     ? "bg-red-soft border-[rgba(181,55,47,.2)] text-red"
     : isCond
-    ? "bg-orange-soft border-[rgba(197,106,17,.2)] text-[#8A4C0E] [data-theme='dark']:text-[#F0A24B]"
+    ? "bg-orange-soft border-[rgba(197,106,17,.2)] text-[#8A4C0E]"
     : "bg-green-soft border-[rgba(46,125,79,.2)] text-green-ink";
 
   return (
@@ -195,7 +195,7 @@ export function WildartDetail({ slug }: { slug: string }) {
       </div>
 
       {/* Legal */}
-      <div className="mx-5 mt-4 mb-8 flex gap-3 px-4 py-[14px] rounded-[var(--r-md)] bg-[#EFEADF] border border-[#E0D8C7] text-[#4A4436] text-[12.5px] font-[620] leading-[1.45] [data-theme='dark']:bg-[#1E2618] [data-theme='dark']:border-[#2C3726] [data-theme='dark']:text-[#B9AE8D]">
+      <div className="mx-5 mt-4 mb-8 flex gap-3 px-4 py-[14px] rounded-[var(--r-md)] bg-[#EFEADF] border border-[#E0D8C7] text-[#4A4436] text-[12.5px] font-[620] leading-[1.45]">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8A7A55" strokeWidth="2.3" strokeLinecap="round" className="shrink-0 mt-[1px]">
           <circle cx="12" cy="12" r="9" /><path d="M12 11v5.5" />
         </svg>

@@ -14,7 +14,7 @@ export function ConditionList({ species }: { species: Species[] }) {
         <Link
           key={s.k}
           href={`/wildart/${s.k}/`}
-          className="flex items-center gap-[13px] w-full bg-gradient-to-b from-[#FFF9F0] to-[#FFF6EA] [data-theme='dark']:from-[#241B08] [data-theme='dark']:to-[#201807] border border-[rgba(197,106,17,.25)] rounded-[var(--r-lg)] p-[14px] shadow-[var(--shadow-s)] no-underline text-ink"
+          className="flex items-center gap-[13px] w-full bg-gradient-to-b from-[#FFF9F0] to-[#FFF6EA] border border-[rgba(197,106,17,.25)] rounded-[var(--r-lg)] p-[14px] shadow-[var(--shadow-s)] no-underline text-ink"
         >
           <span className="w-[44px] h-[44px] rounded-[14px] bg-orange-soft grid place-items-center shrink-0">
             <Silhouette icon={s.ic} size={26} fill="var(--orange)" />

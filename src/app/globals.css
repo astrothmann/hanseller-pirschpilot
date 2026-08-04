@@ -41,35 +41,6 @@
   color-scheme: light;
 }
 
-[data-theme="dark"] {
-  --bg: #121A14;
-  --bg-soft: #18221A;
-  --card: #1B271F;
-  --line: #2B3B2F;
-
-  --ink: #E8F0EA;
-  --ink-2: #A9BCAF;
-  --ink-3: #7E9486;
-
-  --green: #3FA36B;
-  --green-soft: #14301F;
-  --green-ink: #7FD9A3;
-
-  --red: #EE7A6E;
-  --red-soft: #3A1F1C;
-
-  --orange: #F0A24B;
-  --orange-soft: #33260F;
-
-  --grey: #8A9A8F;
-  --grey-soft: #232C25;
-
-  --shadow-s: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.28);
-  --shadow-m: 0 2px 6px rgba(0,0,0,.35), 0 14px 34px rgba(0,0,0,.4);
-
-  color-scheme: dark;
-}
-
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-soft: var(--bg-soft);

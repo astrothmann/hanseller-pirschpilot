@@ -3,7 +3,6 @@ import "./globals.css";
 import { SilhouetteSprite } from "@/components/icons/SilhouetteSprite";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Tabbar } from "@/components/layout/Tabbar";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { StateProvider } from "@/components/layout/StateProvider";
 
 export const viewport: Viewport = {
@@ -30,22 +29,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
       <body className="min-h-dvh">
-        <ThemeProvider>
-          <StateProvider>
-            <SilhouetteSprite />
-            <div className="flex min-h-dvh">
-              <Sidebar />
-              <main className="flex-1 min-w-0 w-full max-w-[1280px] mx-auto flex flex-col h-dvh lg:max-w-[1180px]">
-                <div className="relative flex-1 min-h-0 overflow-hidden">
-                  <div className="absolute inset-0 overflow-y-auto pb-12 no-scrollbar">
-                    {children}
-                  </div>
+        <StateProvider>
+          <SilhouetteSprite />
+          <div className="flex min-h-dvh">
+            <Sidebar />
+            <main className="flex-1 min-w-0 w-full max-w-[1280px] mx-auto flex flex-col h-dvh lg:max-w-[1180px]">
+              <div className="relative flex-1 min-h-0 overflow-hidden">
+                <div className="absolute inset-0 overflow-y-auto pb-12 no-scrollbar">
+                  {children}
                 </div>
-                <Tabbar />
-              </main>
-            </div>
-          </StateProvider>
-        </ThemeProvider>
+              </div>
+              <Tabbar />
+            </main>
+          </div>
+        </StateProvider>
       </body>
     </html>
   );

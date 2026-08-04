@@ -14,7 +14,7 @@ export default function ArtenPage() {
   return (
     <div className="px-5 pt-5">
       <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Meine Arten</h1>
-      <p className="text-[14px] text-ink-3 font-[650] mt-1">Bestimmt, was oben im Deck erscheint</p>
+      <p className="text-[14px] text-ink-3 font-[650] mt-1">Wählt, welche Arten als Karten im Pirsch-Deck auf der Startseite erscheinen – auch außerhalb ihrer Jagdzeit</p>
 
       <div className="mt-5 bg-card border border-line rounded-[var(--r-lg)] p-[18px] shadow-[var(--shadow-s)]">
         <h3 className="m-0 mb-3 text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3">Im Deck anzeigen</h3>

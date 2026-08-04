@@ -12,11 +12,13 @@ import { ConditionList, NoList } from "@/components/heute/ConditionList";
 import { Sheet } from "@/components/ui/Sheet";
 import { Silhouette } from "@/components/icons/SilhouetteSprite";
 import { ChevronRight } from "@/components/icons/Icons";
+import { StateSheet } from "@/components/layout/StateSheet";
 import Link from "next/link";
 
 export default function HeutePage() {
   const [allSheetOpen, setAllSheetOpen] = useState(false);
   const [noOpen, setNoOpen] = useState(false);
+  const [stateSheetOpen, setStateSheetOpen] = useState(false);
 
   const { now, todayDoy, year } = getToday();
   const { state } = useActiveState();
@@ -39,9 +41,18 @@ export default function HeutePage() {
       {/* Header */}
       <div className="px-5 pt-5 pb-2">
         <h1 className="text-[28px] font-[850] tracking-[-1px] m-0">Hanseller Pirschpilot</h1>
-        <p className="text-[14px] text-ink-3 font-[650] mt-1">
-          {state} <span className="text-ink-3/50 mx-1">·</span> Heute, {fmtDateShort(now)}
-        </p>
+        <button
+          onClick={() => setStateSheetOpen(true)}
+          className="mt-1 bg-transparent border-0 cursor-pointer p-0 flex items-center gap-[6px] text-[14px] text-ink-3 font-[650] active:opacity-60"
+          aria-label="Bundesland wählen"
+        >
+          <span className="text-green font-[700] underline underline-offset-[3px] decoration-green/40">{state}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+          <span className="text-ink-3/50 mx-1">·</span>
+          <span>Heute, {fmtDateShort(now)}</span>
+        </button>
       </div>
 
       {/* Summary */}
@@ -134,6 +145,8 @@ export default function HeutePage() {
           ))}
         </div>
       </Sheet>
+
+      <StateSheet open={stateSheetOpen} onClose={() => setStateSheetOpen(false)} />
     </>
   );
 }

@@ -53,7 +53,7 @@ export function Sheet({
         aria-modal="true"
         aria-label={title}
       >
-        <div className="w-[38px] h-[5px] rounded-[5px] bg-[#D5CFC1] [data-theme='dark']:bg-[#3A4A3E] mx-auto mt-[10px] mb-1 shrink-0" />
+        <div className="w-[38px] h-[5px] rounded-[5px] bg-[#D5CFC1] mx-auto mt-[10px] mb-1 shrink-0" />
         <div className="px-5 py-2 pb-3 shrink-0">
           <div className="text-[20px] font-[810] tracking-[-0.5px]">{title}</div>
           {subtitle && <div className="text-[13px] text-ink-3 font-[630] mt-[3px]">{subtitle}</div>}
