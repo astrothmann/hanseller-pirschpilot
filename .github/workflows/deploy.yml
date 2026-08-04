@@ -41,6 +41,6 @@ jobs:
           set sftp:auto-confirm yes
           set net:max-retries 3
           set net:timeout 30
-          mirror --reverse --delete --verbose ./dist/ "$REMOTE_DIR"
+          mirror --reverse --delete --verbose ./out/ "$REMOTE_DIR"
           bye
           EOF
