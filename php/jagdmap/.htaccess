@@ -1,0 +1,11 @@
+Options -Indexes
+
+# Never expose raw data files or executable scripts directly.
+<FilesMatch "\.(json|php|htaccess)$">
+  Require all denied
+</FilesMatch>
+
+# Uploads are served as plain static images only.
+<FilesMatch "\.(php|phtml|php5|php7|phar)$">
+  Require all denied
+</FilesMatch>

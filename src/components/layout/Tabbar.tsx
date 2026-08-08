@@ -7,7 +7,7 @@ const NAV = [
   { label: "Heute", href: "/", icon: <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /> },
   { label: "Prüfen", href: "/pruefen", icon: <><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M8.5 11l2 2 4-4" /></> },
   { label: "Kalender", href: "/kalender", icon: <><rect x="3.5" y="5" width="17" height="16" rx="3" /><path d="M3.5 10h17M8 3v4M16 3v4" /></> },
-  { label: "Meine Arten", href: "/arten", icon: <path d="m12 20-1.3-1.2C6 14.7 3.5 12.4 3.5 9.4A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 8.5 2.4c0 3-2.5 5.3-7.2 9.4z" /> },
+  { label: "Jagdkarte", href: "/karte", icon: <><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3z" /><path d="M9 3v15M15 6v15" /></> },
 ];
 
 function isActive(pathname: string, href: string) {

@@ -23,12 +23,18 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
+  // API: always hit the network (never serve stale map data).
+  if (url.pathname.startsWith("/api/")) return;
+
   // HTML pages: network-first (always get latest)
   const isPage = req.headers.get("accept")?.includes("text/html") ||
     url.pathname.endsWith("/") ||
     url.pathname.endsWith(".html");
 
-  if (isPage) {
+  // Uploaded photos: network-first so deleted photos disappear promptly.
+  const isUpload = url.pathname.startsWith("/jagdmap/uploads/");
+
+  if (isPage || isUpload) {
     event.respondWith(
       fetch(req)
         .then((res) => {

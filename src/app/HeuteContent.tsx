@@ -1,15 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { getSpecies } from "@/lib/species";
 import { useFavorites } from "@/lib/favorites";
 import { useActiveState } from "@/components/layout/StateProvider";
 import { getToday, inWin, statusOf, fmtDateShort, periodShort } from "@/lib/dates";
 import { SummaryCard } from "@/components/heute/SummaryCard";
 import { DeckCarousel } from "@/components/heute/DeckCarousel";
+import { DeckSheet } from "@/components/heute/DeckSheet";
 import { ConditionList, NoList } from "@/components/heute/ConditionList";
 import { WildartIcon } from "@/components/icons/WildartIcon";
-import { ChevronRight } from "@/components/icons/Icons";
+import { ChevronRight, StarIcon } from "@/components/icons/Icons";
 import { BundeslandPicker } from "@/components/layout/BundeslandPicker";
 import Link from "next/link";
 
@@ -17,7 +18,8 @@ export default function HeuteContent() {
   const { now, todayDoy, year } = getToday();
   const { state } = useActiveState();
   const species = getSpecies(state);
-  const { favorites } = useFavorites(state);
+  const { favorites, toggle } = useFavorites(state);
+  const [deckOpen, setDeckOpen] = useState(false);
 
   const jagdbar = useMemo(() => species.filter((s) => inWin(s, todayDoy)), [species, todayDoy]);
   const cond = useMemo(() => species.filter((s) => statusOf(s, todayDoy) === "cond"), [species, todayDoy]);
@@ -46,13 +48,24 @@ export default function HeuteContent() {
       <section className="mt-6">
         <div className="px-5 flex items-baseline justify-between mb-2">
           <h2 className="text-[12px] font-[810] tracking-[1.1px] uppercase text-ink-3 m-0">Pirsch-Deck</h2>
-          <span className="text-[12.5px] text-ink-3 font-[620]">{deckSpecies.length} Kategorien</span>
+          <div className="flex items-center gap-[10px]">
+            <span className="text-[12.5px] text-ink-3 font-[620]">{deckSpecies.length} Kategorien</span>
+            <button
+              onClick={() => setDeckOpen(true)}
+              className="flex items-center gap-[6px] px-[13px] py-[7px] rounded-full bg-forest-700 text-[#EAF3EC] text-[12.5px] font-[720] border-none cursor-pointer active:scale-[.96] transition-transform"
+            >
+              <StarIcon size={13} filled />
+              Anpassen
+            </button>
+          </div>
         </div>
         <DeckCarousel species={deckSpecies} todayDoy={todayDoy} year={year} />
         <div className="text-center text-[12px] text-ink-3/60 font-[580] mt-2">
           Karte antippen für Details · ← → zum Blättern
         </div>
       </section>
+
+      <DeckSheet open={deckOpen} onClose={() => setDeckOpen(false)} favorites={favorites} toggle={toggle} />
 
       {/* Heute jagdbar */}
       <section className="mt-6">

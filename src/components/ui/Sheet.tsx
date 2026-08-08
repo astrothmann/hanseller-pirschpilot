@@ -1,21 +1,32 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
+import { useIosKeyboardGuard } from "./useIosKeyboardGuard";
 
 export function Sheet({
   open,
   onClose,
   title,
   subtitle,
+  headerAction,
   children,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
   subtitle?: string;
+  headerAction?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+
+  useIosKeyboardGuard(open);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -25,7 +36,7 @@ export function Sheet({
     } else if (!open && dialog.open) {
       dialog.close();
     }
-  }, [open]);
+  }, [open, mounted]);
 
   // Close on backdrop click (click on the dialog element itself, not its children)
   const handleClick = (e: React.MouseEvent<HTMLDialogElement>) => {
@@ -34,7 +45,9 @@ export function Sheet({
     }
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <dialog
       ref={dialogRef}
       onClick={handleClick}
@@ -47,14 +60,18 @@ export function Sheet({
         style={{ boxShadow: "0 -14px 40px rgba(10,24,16,.22)" }}
       >
         <div className="w-[38px] h-[5px] rounded-[5px] bg-[#D5CFC1] mx-auto mt-[10px] mb-1 shrink-0" />
-        <div className="px-5 py-2 pb-3 shrink-0">
+        <div className="relative px-5 py-2 pb-3 shrink-0">
           <div className="text-[20px] font-[810] tracking-[-0.5px]">{title}</div>
           {subtitle && <div className="text-[13px] text-ink-3 font-[630] mt-[3px]">{subtitle}</div>}
+          {headerAction && (
+            <div className="absolute top-1/2 -translate-y-1/2 right-4">{headerAction}</div>
+          )}
         </div>
         <div className="overflow-y-auto px-5 no-scrollbar" style={{ paddingBottom: "max(30px, env(safe-area-inset-bottom, 30px))" }}>
           {children}
         </div>
       </div>
-    </dialog>
+    </dialog>,
+    document.body
   );
 }
