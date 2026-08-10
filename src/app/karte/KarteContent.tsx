@@ -6,7 +6,7 @@ import { JagdMap, fitToData } from "@/components/map/JagdMap";
 import { MarkerSheet } from "@/components/map/MarkerSheet";
 import { MarkerTypeSheet } from "@/components/map/MarkerTypeSheet";
 import { LoginDialog } from "@/components/map/LoginDialog";
-import { StatsSheet } from "@/components/map/StatsSheet";
+import { buildAbschussReportHtml } from "@/components/map/AbschussReport";
 import { exportMapPdf } from "@/components/map/PdfExport";
 import { BarChartIcon, DownloadIcon, EditIcon, EyeIcon, LogoutIcon, TargetIcon, UserIcon } from "@/components/icons/Icons";
 import {
@@ -30,7 +30,6 @@ export default function KarteContent() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [addingType, setAddingType] = useState<MarkerType | null>(null);
   const [typeSheetOpen, setTypeSheetOpen] = useState(false);
-  const [statsOpen, setStatsOpen] = useState(false);
   const [banner, setBanner] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [pendingNewId, setPendingNewId] = useState<string | null>(null);
@@ -83,7 +82,6 @@ export default function KarteContent() {
     setSheetOpen(false);
     setAddingType(null);
     setTypeSheetOpen(false);
-    setStatsOpen(false);
     setData((d) => (d ? { ...d, markers: [] } : d));
   }, []);
 
@@ -199,6 +197,29 @@ export default function KarteContent() {
     }
   };
 
+  const handleExportReport = async () => {
+    if (!data) return;
+    setBusy(true);
+    const win = window.open("", "_blank");
+    if (!win) {
+      showBanner("Popup blockiert – bitte für diese Seite erlauben");
+      setBusy(false);
+      return;
+    }
+    try {
+      const html = await buildAbschussReportHtml(data);
+      const url = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
+      win.location.href = url;
+      // Revoke the blob URL after the new window has loaded it
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } catch (err) {
+      win.close();
+      showBanner(err instanceof Error ? err.message : "Bericht konnte nicht erstellt werden");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const handleResetZoom = () => {
     if (!data || !mapRef.current) return;
     fitToData(mapRef.current, data);
@@ -233,8 +254,8 @@ export default function KarteContent() {
           {loggedIn && (
             <button
               type="button"
-              onClick={() => setStatsOpen(true)}
-              title="Abschuss-Statistik"
+              onClick={() => void handleExportReport()}
+              title="Abschuss-Statistik als Bericht exportieren"
               aria-label="Abschuss-Statistik"
               className="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-line bg-bg-soft text-ink-2"
             >
@@ -403,7 +424,6 @@ export default function KarteContent() {
         onSave={handleSaveMarker}
         onDelete={handleDeleteMarker}
       />
-      <StatsSheet open={statsOpen} onClose={() => setStatsOpen(false)} data={data} />
     </div>
   );
 }

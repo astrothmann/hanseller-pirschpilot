@@ -58,7 +58,6 @@ export function Sheet({
       ref={dialogRef}
       tabIndex={-1}
       onClick={handleClick}
-      onPointerUp={(e) => { if (e.target === dialogRef.current) onClose(); }}
       onCancel={(e) => { e.preventDefault(); onClose(); }}
       className="fixed inset-0 m-0 p-0 w-full h-full max-w-full max-h-full bg-transparent border-0 outline-none z-[100] open:flex items-end justify-center backdrop:bg-[rgba(10,24,16,.45)] backdrop:backdrop-blur-[1.5px]"
     >
