@@ -10,10 +10,8 @@ export interface MapMarker {
   id: string;
   type: MarkerType;
   name: string;
-  note: string;
   lat: number;
   lng: number;
-  photos: string[];
   createdAt: string | null;
   updatedAt: string | null;
 }
@@ -95,12 +93,6 @@ export function apiBase(): string {
   return "";
 }
 
-/** Resolve a photo URL (webroot-relative in production, absolute during dev). */
-export function resolveMediaUrl(url: string): string {
-  if (url.startsWith("/")) return apiBase() + url;
-  return url;
-}
-
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
   try {
@@ -145,13 +137,17 @@ async function request(path: string, init: RequestInit = {}): Promise<Response> 
     } catch {
       /* keep generic message */
     }
-    throw new Error(msg);
+    const err = new Error(msg) as Error & { status?: number };
+    err.status = res.status;
+    throw err;
   }
   return res;
 }
 
-export async function apiFetchData(): Promise<JagdMapData> {
-  const res = await request("/api/jagdmap.php?action=data");
+export async function apiFetchData(token?: string | null): Promise<JagdMapData> {
+  const headers: Record<string, string> = {};
+  if (token) headers["X-Jagdmap-Token"] = token;
+  const res = await request("/api/jagdmap.php?action=data", { headers });
   return (await res.json()) as JagdMapData;
 }
 
@@ -177,28 +173,5 @@ export async function apiSave(data: JagdMapData, token: string): Promise<void> {
       markers: data.markers,
       updatedAt: data.updatedAt,
     }),
-  });
-}
-
-export async function apiUploadPhoto(file: File, token: string): Promise<string> {
-  const fd = new FormData();
-  fd.append("photo", file);
-  const res = await request("/api/jagdmap.php?action=upload", {
-    method: "POST",
-    headers: { "X-Jagdmap-Token": token },
-    body: fd,
-  });
-  const j = await res.json();
-  return j.url as string;
-}
-
-export async function apiDeletePhoto(url: string, token: string): Promise<void> {
-  await request("/api/jagdmap.php?action=delete-photo", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Jagdmap-Token": token,
-    },
-    body: JSON.stringify({ url }),
   });
 }

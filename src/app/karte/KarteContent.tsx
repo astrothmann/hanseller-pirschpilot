@@ -7,13 +7,11 @@ import { MarkerSheet } from "@/components/map/MarkerSheet";
 import { MarkerTypeSheet } from "@/components/map/MarkerTypeSheet";
 import { LoginDialog } from "@/components/map/LoginDialog";
 import { exportMapPdf } from "@/components/map/PdfExport";
-import { DownloadIcon, LogoutIcon, TargetIcon, UserIcon } from "@/components/icons/Icons";
+import { DownloadIcon, EditIcon, EyeIcon, LogoutIcon, TargetIcon, UserIcon } from "@/components/icons/Icons";
 import {
   MARKER_TYPE_BY_KEY,
-  apiDeletePhoto,
   apiFetchData,
   apiSave,
-  apiUploadPhoto,
   getToken,
   newId,
   setToken as persistToken,
@@ -34,9 +32,11 @@ export default function KarteContent() {
   const [banner, setBanner] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [pendingNewId, setPendingNewId] = useState<string | null>(null);
+  const [editMode, setEditMode] = useState(false);
   const mapRef = useRef<L.Map | null>(null);
 
-  const mode: "view" | "admin" = token ? "admin" : "view";
+  const loggedIn = token !== null;
+  const mode: "public" | "view" | "edit" = !loggedIn ? "public" : editMode ? "edit" : "view";
   const selectedMarker = data?.markers.find((m) => m.id === selectedId) ?? null;
 
   const showBanner = useCallback((msg: string) => {
@@ -44,19 +44,19 @@ export default function KarteContent() {
     window.setTimeout(() => setBanner(null), 4000);
   }, []);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (tk?: string | null) => {
     try {
-      const d = await apiFetchData();
+      const d = await apiFetchData(tk === undefined ? token : tk);
       setData(d);
       setLoadError(null);
     } catch (err) {
       setLoadError(err instanceof Error ? err.message : "Kartendaten konnten nicht geladen werden");
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     let cancelled = false;
-    apiFetchData()
+    apiFetchData(getToken())
       .then((d) => {
         if (!cancelled) {
           setData(d);
@@ -73,6 +73,17 @@ export default function KarteContent() {
     };
   }, []);
 
+  const handleLogout = useCallback(() => {
+    persistToken(null);
+    setTokenState(null);
+    setEditMode(false);
+    setSelectedId(null);
+    setSheetOpen(false);
+    setAddingType(null);
+    setTypeSheetOpen(false);
+    setData((d) => (d ? { ...d, markers: [] } : d));
+  }, []);
+
   const persist = useCallback(
     async (next: JagdMapData) => {
       setData(next);
@@ -80,26 +91,25 @@ export default function KarteContent() {
       try {
         await apiSave(next, token);
       } catch (err) {
-        showBanner(err instanceof Error ? err.message : "Speichern fehlgeschlagen");
-        void load();
+        const status = (err as Error & { status?: number }).status;
+        if (status === 401) {
+          handleLogout();
+          showBanner("Sitzung abgelaufen – bitte neu anmelden");
+        } else {
+          showBanner(err instanceof Error ? err.message : "Speichern fehlgeschlagen");
+          void load();
+        }
       }
     },
-    [token, load, showBanner]
+    [token, load, showBanner, handleLogout]
   );
 
   const handleLogin = (t: string) => {
     persistToken(t);
     setTokenState(t);
+    setEditMode(false);
     setLoginOpen(false);
-  };
-
-  const handleLogout = () => {
-    persistToken(null);
-    setTokenState(null);
-    setSelectedId(null);
-    setSheetOpen(false);
-    setAddingType(null);
-    setTypeSheetOpen(false);
+    void load(t);
   };
 
   const handleSelect = (id: string) => {
@@ -126,16 +136,14 @@ export default function KarteContent() {
   };
 
   const handleMapClick = (latlng: L.LatLng) => {
-    if (!addingType || !data) return;
+    if (mode !== "edit" || !addingType || !data) return;
     const now = new Date().toISOString();
     const marker: MapMarker = {
       id: newId(),
       type: addingType,
       name: "",
-      note: "",
       lat: latlng.lat,
       lng: latlng.lng,
-      photos: [],
       createdAt: now,
       updatedAt: now,
     };
@@ -148,7 +156,7 @@ export default function KarteContent() {
   };
 
   const handleMarkerMoved = (id: string, latlng: L.LatLng) => {
-    if (!data) return;
+    if (mode !== "edit" || !data) return;
     const now = new Date().toISOString();
     const next = {
       ...data,
@@ -168,55 +176,12 @@ export default function KarteContent() {
   };
 
   const handleDeleteMarker = (id: string) => {
-    if (mode !== "admin") return;
+    if (mode !== "edit") return;
     if (!data || !window.confirm("Diesen Marker wirklich löschen?")) return;
     const next = { ...data, markers: data.markers.filter((m) => m.id !== id) };
     setSheetOpen(false);
     setSelectedId(null);
     void persist(next);
-  };
-
-  const handleAddPhotos = async (id: string, files: File[]) => {
-    if (!token || !data) return;
-    setBusy(true);
-    try {
-      const urls: string[] = [];
-      for (const f of files) {
-        urls.push(await apiUploadPhoto(f, token));
-      }
-      const updated = {
-        markers: data.markers.map((m) =>
-          m.id === id
-            ? { ...m, photos: [...m.photos, ...urls], updatedAt: new Date().toISOString() }
-            : m
-        ),
-      };
-      if (id === pendingNewId) {
-        setData((d) => (d ? { ...d, markers: updated.markers } : d));
-      } else {
-        await persist({ ...data, ...updated });
-      }
-    } catch (err) {
-      showBanner(err instanceof Error ? err.message : "Foto-Upload fehlgeschlagen");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleDeletePhoto = async (id: string, url: string) => {
-    if (!token || !data) return;
-    try {
-      await apiDeletePhoto(url, token);
-      const next = {
-        ...data,
-        markers: data.markers.map((m) =>
-          m.id === id ? { ...m, photos: m.photos.filter((p) => p !== url) } : m
-        ),
-      };
-      void persist(next);
-    } catch (err) {
-      showBanner(err instanceof Error ? err.message : "Foto konnte nicht gelöscht werden");
-    }
   };
 
   const handlePdf = async () => {
@@ -239,16 +204,9 @@ export default function KarteContent() {
   return (
     <div className="flex flex-col h-full min-h-[70dvh]">
       {/* Header */}
-      <div className="px-5 pt-5 pb-3 flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          <h1 className="text-[26px] font-[850] tracking-[-0.5px] m-0">Jagdkarte</h1>
-          {mode === "admin" && (
-            <div className="text-[13px] text-ink-3 font-[630] mt-[3px]">
-              Admin-Modus · Änderungen werden live gespeichert
-            </div>
-          )}
-        </div>
-        <div className="flex items-center justify-end gap-2">
+      <div className="px-5 pt-5 pb-3">
+        <h1 className="text-[26px] font-[850] tracking-[-0.5px] m-0 leading-[1.2]">Jagdkarte</h1>
+        <div className="flex flex-wrap items-center gap-2 mt-3">
           <button
             type="button"
             onClick={handleResetZoom}
@@ -258,26 +216,18 @@ export default function KarteContent() {
           >
             <TargetIcon size={18} />
           </button>
-          <button
-            type="button"
-            onClick={() => void handlePdf()}
-            title="Karte als PDF exportieren"
-            aria-label="Karte als PDF exportieren"
-            className="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-line bg-bg-soft text-ink-2"
-          >
-            <DownloadIcon size={18} />
-          </button>
-          {mode === "admin" ? (
+          {loggedIn && (
             <button
               type="button"
-              onClick={handleLogout}
-              title="Abmelden"
-              aria-label="Abmelden"
+              onClick={() => void handlePdf()}
+              title="Karte als PDF exportieren"
+              aria-label="Karte als PDF exportieren"
               className="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-line bg-bg-soft text-ink-2"
             >
-              <LogoutIcon size={18} />
+              <DownloadIcon size={18} />
             </button>
-          ) : (
+          )}
+          {mode === "public" ? (
             <button
               type="button"
               onClick={() => setLoginOpen(true)}
@@ -287,8 +237,50 @@ export default function KarteContent() {
             >
               <UserIcon size={18} />
             </button>
+          ) : (
+            <>
+              {mode === "view" ? (
+                <button
+                  type="button"
+                  onClick={() => setEditMode(true)}
+                  title="Bearbeiten-Modus aktivieren"
+                  aria-label="Bearbeiten-Modus aktivieren"
+                  className="flex items-center gap-1.5 rounded-full bg-green text-white px-3.5 py-2.5 text-[13px] font-[740] shadow-[var(--shadow-s)]"
+                >
+                  <EditIcon size={15} />
+                  Bearbeiten
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setEditMode(false)}
+                  title="Bearbeiten-Modus beenden"
+                  aria-label="Bearbeiten-Modus beenden"
+                  className="flex items-center gap-1.5 rounded-full border border-line bg-bg-soft text-ink-2 px-3.5 py-2.5 text-[13px] font-[740]"
+                >
+                  <EyeIcon size={15} />
+                  Ansicht
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleLogout}
+                title="Abmelden"
+                aria-label="Abmelden"
+                className="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-line bg-bg-soft text-ink-2"
+              >
+                <LogoutIcon size={18} />
+              </button>
+            </>
           )}
         </div>
+        {(mode === "view" || mode === "edit") && (
+          <div data-testid="mode-subtitle" className="text-[13px] text-ink-3 font-[630] mt-2">
+            {mode === "view"
+              ? "Ansicht-Modus · Marker sind schreibgeschützt"
+              : "Bearbeiten-Modus · Änderungen werden live gespeichert"}
+          </div>
+        )}
       </div>
 
       {banner && (
@@ -321,7 +313,7 @@ export default function KarteContent() {
               </div>
             )}
 
-            {addingType && mode === "admin" && (
+            {addingType && mode === "edit" && (
               <div className="absolute inset-x-0 top-3 z-[500] flex justify-center pointer-events-none">
                 <span className="pointer-events-auto flex items-center gap-2 rounded-full bg-ink/85 text-white text-[12.5px] font-[700] px-3.5 py-1.5 shadow-[var(--shadow-m)]">
                   Position für {MARKER_TYPE_BY_KEY[addingType].label} antippen
@@ -346,7 +338,7 @@ export default function KarteContent() {
               <span className="grid place-items-center w-[22px] h-[22px] rounded-full border border-line bg-bg-soft/95 backdrop-blur text-[11px] font-[700] text-ink-3">W</span>
             </div>
 
-            {mode === "admin" && (
+            {mode === "edit" && (
               <button
                 type="button"
                 onClick={() => setTypeSheetOpen(true)}
@@ -391,13 +383,11 @@ export default function KarteContent() {
       <MarkerSheet
         open={sheetOpen && !!selectedMarker}
         marker={selectedMarker}
-        mode={mode}
+        mode={mode === "edit" ? "edit" : "view"}
         isNew={selectedMarker?.id === pendingNewId}
         onClose={handleCloseSheet}
         onSave={handleSaveMarker}
         onDelete={handleDeleteMarker}
-        onAddPhotos={handleAddPhotos}
-        onDeletePhoto={handleDeletePhoto}
       />
     </div>
   );

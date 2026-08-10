@@ -31,10 +31,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith("/") ||
     url.pathname.endsWith(".html");
 
-  // Uploaded photos: network-first so deleted photos disappear promptly.
-  const isUpload = url.pathname.startsWith("/jagdmap/uploads/");
-
-  if (isPage || isUpload) {
+  if (isPage) {
     event.respondWith(
       fetch(req)
         .then((res) => {

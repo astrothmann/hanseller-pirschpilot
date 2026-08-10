@@ -57,14 +57,14 @@ function FitOnce({ data }: { data: JagdMapData }) {
 }
 
 function BackgroundClicks({ mode, adding, onMapClick, onDeselect }: {
-  mode: "view" | "admin";
+  mode: "public" | "view" | "edit";
   adding: boolean;
   onMapClick: (latlng: L.LatLng) => void;
   onDeselect: () => void;
 }) {
   useMapEvents({
     click: (e) => {
-      if (mode === "admin" && adding) onMapClick(e.latlng);
+      if (mode === "edit" && adding) onMapClick(e.latlng);
       else onDeselect();
     },
   });
@@ -73,7 +73,7 @@ function BackgroundClicks({ mode, adding, onMapClick, onDeselect }: {
 
 export interface JagdMapProps {
   data: JagdMapData;
-  mode: "view" | "admin";
+  mode: "public" | "view" | "edit";
   selectedId: string | null;
   addingType: MarkerType | null;
   onMapReady: (map: L.Map) => void;
@@ -121,12 +121,12 @@ export function JagdMap(props: JagdMapProps) {
         />
       )}
 
-      {data.markers.map((m) => (
+      {mode !== "public" && data.markers.map((m) => (
         <Marker
           key={m.id}
           position={[m.lat, m.lng]}
           icon={markerIcon(m.type, selectedId === m.id)}
-          draggable={mode === "admin"}
+          draggable={mode === "edit"}
           eventHandlers={{
             click: () => onSelect(m.id),
             dragend: (e) => onMarkerMoved(m.id, e.target.getLatLng() as L.LatLng),

@@ -6,14 +6,21 @@ PWA für Jäger: Jagdzeiten je Bundesland, Pirsch-Deck, Wildarten-Details und ei
 
 ### Jagdkarte – für alle Besucher gleich
 
-Die Karte (Reviergrenze, Marker, Fotos) wird **zentral auf dem Webserver** gespeichert und ist für **jeden Besucher identisch**. Das statische Frontend hat keinen eigenen Server – ein kleines PHP-Backend übernimmt Speicherung und Auth:
+Die Karte (Reviergrenze, Marker) wird **zentral auf dem Webserver** gespeichert und ist für **jeden Besucher identisch**. Das statische Frontend hat keinen eigenen Server – ein kleines PHP-Backend übernimmt Speicherung und Auth:
 
 - Daten: `php/jagdmap/data.json` (Grenze + Marker)
-- Fotos: `php/jagdmap/uploads/`
 - Sessions: `php/jagdmap/sessions.json` (Token, 24 h gültig)
-- API: `php/api/jagdmap.php` (`data` öffentlich lesen, `login`/`save`/`upload`/`delete-photo`/`backup`/`restore` mit Passwort)
+- API: `php/api/jagdmap.php` (`data` zeigt Marker nur mit gültigem Token; `login`/`save`/`backup`/`restore` mit Passwort)
 - Passwort: Env `JAGDMAP_PASSWORD` (Fallback `pirsch123`); Token liegt im Browser unter `jd-karte-admin`
 - `php/jagdmap/` ist per `.gitignore` (alles außer `.htaccess`) und per `.htaccess` (Zugriff auf `data.json`/`sessions.json` gesperrt) geschützt
+
+### Sichtbarkeit & Berechtigungen
+
+Die Karte kennt drei Modi:
+
+- **Besucher (ohne Login):** sehen nur die Reviergrenze. Marker werden weder gerendert noch von der API ausgeliefert (`?action=data` liefert Marker nur mit gültigem Token).
+- **Ansicht-Modus (nach Login):** Marker sind sichtbar, aber schreibgeschützt (öffnen zeigt Details + Google-Maps-Link).
+- **Bearbeiten-Modus:** Toggle für angemeldete Nutzer – Marker hinzufügen, verschieben, bearbeiten und löschen.
 
 Jeder Login speichert live in `data.json` → Änderungen sind sofort für alle sichtbar.
 
