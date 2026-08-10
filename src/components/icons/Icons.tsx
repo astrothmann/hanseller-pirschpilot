@@ -84,6 +84,14 @@ export function LogoutIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+export function BarChartIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 20h16M7 20v-9M12 20V5M17 20v-6" />
+    </svg>
+  );
+}
+
 export function TrashIcon({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">

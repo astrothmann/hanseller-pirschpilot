@@ -6,8 +6,9 @@ import { JagdMap, fitToData } from "@/components/map/JagdMap";
 import { MarkerSheet } from "@/components/map/MarkerSheet";
 import { MarkerTypeSheet } from "@/components/map/MarkerTypeSheet";
 import { LoginDialog } from "@/components/map/LoginDialog";
+import { StatsSheet } from "@/components/map/StatsSheet";
 import { exportMapPdf } from "@/components/map/PdfExport";
-import { DownloadIcon, EditIcon, EyeIcon, LogoutIcon, TargetIcon, UserIcon } from "@/components/icons/Icons";
+import { BarChartIcon, DownloadIcon, EditIcon, EyeIcon, LogoutIcon, TargetIcon, UserIcon } from "@/components/icons/Icons";
 import {
   MARKER_TYPE_BY_KEY,
   apiFetchData,
@@ -29,6 +30,7 @@ export default function KarteContent() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [addingType, setAddingType] = useState<MarkerType | null>(null);
   const [typeSheetOpen, setTypeSheetOpen] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
   const [banner, setBanner] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [pendingNewId, setPendingNewId] = useState<string | null>(null);
@@ -81,6 +83,7 @@ export default function KarteContent() {
     setSheetOpen(false);
     setAddingType(null);
     setTypeSheetOpen(false);
+    setStatsOpen(false);
     setData((d) => (d ? { ...d, markers: [] } : d));
   }, []);
 
@@ -225,6 +228,17 @@ export default function KarteContent() {
               className="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-line bg-bg-soft text-ink-2"
             >
               <DownloadIcon size={18} />
+            </button>
+          )}
+          {loggedIn && (
+            <button
+              type="button"
+              onClick={() => setStatsOpen(true)}
+              title="Abschuss-Statistik"
+              aria-label="Abschuss-Statistik"
+              className="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-line bg-bg-soft text-ink-2"
+            >
+              <BarChartIcon size={18} />
             </button>
           )}
           {mode === "public" ? (
@@ -389,6 +403,7 @@ export default function KarteContent() {
         onSave={handleSaveMarker}
         onDelete={handleDeleteMarker}
       />
+      <StatsSheet open={statsOpen} onClose={() => setStatsOpen(false)} data={data} />
     </div>
   );
 }

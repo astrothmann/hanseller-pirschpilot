@@ -250,6 +250,24 @@ function normalize_marker($m): ?array
     $createdAt = isset($m['createdAt']) && is_string($m['createdAt']) ? $m['createdAt'] : null;
     $updatedAt = isset($m['updatedAt']) && is_string($m['updatedAt']) ? $m['updatedAt'] : null;
 
+    $abschuesse = [];
+    if (isset($m['abschuesse']) && is_array($m['abschuesse'])) {
+        foreach (array_slice($m['abschuesse'], 0, 500) as $a) {
+            if (!is_array($a)) continue;
+            $wildart = $a['wildart'] ?? null;
+            $schuetze = $a['schuetze'] ?? null;
+            $datum = $a['datum'] ?? null;
+            if (!is_string($wildart) || $wildart === '' || mb_strlen($wildart) > 64) continue;
+            if (!is_string($schuetze) || mb_strlen($schuetze) > 120) continue;
+            if (!is_string($datum) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $datum)) continue;
+            $abschuesse[] = [
+                'wildart' => $wildart,
+                'schuetze' => mb_substr($schuetze, 0, 120),
+                'datum' => $datum,
+            ];
+        }
+    }
+
     return [
         'id' => $id,
         'type' => $type,
@@ -258,6 +276,7 @@ function normalize_marker($m): ?array
         'lng' => (float) $lng,
         'createdAt' => $createdAt,
         'updatedAt' => $updatedAt,
+        'abschuesse' => $abschuesse,
     ];
 }
 

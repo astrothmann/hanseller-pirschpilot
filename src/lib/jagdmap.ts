@@ -6,6 +6,15 @@ export type MarkerType =
   | "drueckjagdbock"
   | "defekt";
 
+export interface Abschuss {
+  /** Species key from data/species/*.json (e.g. "rehbock"). */
+  wildart: string;
+  /** Free-text hunter name. */
+  schuetze: string;
+  /** ISO date YYYY-MM-DD. */
+  datum: string;
+}
+
 export interface MapMarker {
   id: string;
   type: MarkerType;
@@ -14,6 +23,7 @@ export interface MapMarker {
   lng: number;
   createdAt: string | null;
   updatedAt: string | null;
+  abschuesse?: Abschuss[];
 }
 
 export interface JagdMapData {
@@ -73,6 +83,16 @@ export const MARKER_TYPES: MarkerTypeMeta[] = [
 export const MARKER_TYPE_BY_KEY: Record<MarkerType, MarkerTypeMeta> = Object.fromEntries(
   MARKER_TYPES.map((m) => [m.key, m])
 ) as Record<MarkerType, MarkerTypeMeta>;
+
+/** Marker types on which Abschüsse (harvest records) can be logged. */
+export const ABSCHUSS_TYPES: MarkerType[] = ["drueckjagdbock", "leitersitz", "jagdkanzel"];
+
+export function supportsAbschuesse(type: MarkerType): boolean {
+  return ABSCHUSS_TYPES.includes(type);
+}
+
+/** Known hunter names selectable when logging an Abschuss. */
+export const SCHUETZEN_NAMES: string[] = ["Michael", "Reinhard", "Wilhelm", "Heinz", "Ludwig", "Gregor"];
 
 /* ---------------------------------------------------------------------------
  * API client
