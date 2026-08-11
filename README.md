@@ -10,7 +10,8 @@ Die Karte (Reviergrenze, Marker) wird **zentral auf dem Webserver** gespeichert 
 
 - Daten: `php/jagdmap/data.json` (Grenze + Marker)
 - Sessions: `php/jagdmap/sessions.json` (Token, 24 h gültig)
-- API: `php/api/jagdmap.php` (`data` zeigt Marker nur mit gültigem Token; `login`/`save`/`backup`/`restore` mit Passwort)
+- API: `php/api/jagdmap.php` (`data` zeigt Marker nur mit gültigem Token; `login`/`save` mit Passwort)
+- Backups: Ein GitHub-Workflow (`.github/workflows/backup.yml`) lädt täglich die aktuelle `data.json` vom Webspace und speichert sie als `jagdkarte-<timestamp>.json` in der Git-Branch `backups`. Wiederherstellung erfolgt manuell über den STRATO-Dateimanager/SFTP – Anleitung liegt als `README.md` in der Branch `backups`
 - Passwort: Env `JAGDMAP_PASSWORD` (Fallback `pirsch123`); Token liegt im Browser unter `jd-karte-admin`
 - `php/jagdmap/` ist per `.gitignore` (alles außer `.htaccess`) und per `.htaccess` (Zugriff auf `data.json`/`sessions.json` gesperrt) geschützt
 

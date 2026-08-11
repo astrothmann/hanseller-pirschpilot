@@ -11,8 +11,6 @@ declare(strict_types=1);
  *   GET  ?action=data                    – map data; markers only with valid token
  *   POST ?action=login      {password}   – returns bearer token
  *   POST ?action=save       {data}       – persist boundary + markers (auth)
- *   GET  ?action=backup                  – download full data.json (auth)
- *   POST ?action=restore    (multipart)  – replace data from a backup (auth)
  *
  * The public ?action=data response always contains the boundary but only
  * includes markers when a valid admin token is supplied.
@@ -25,7 +23,6 @@ const DATA_FILE = DATA_DIR . '/data.json';
 const SESSIONS_FILE = DATA_DIR . '/sessions.json';
 const STATIC_BOUNDARY_FILE = DATA_DIR . '/boundary.json';
 const TOKEN_TTL = 60 * 60 * 24;        // 24h
-const MAX_RESTORE_BYTES = 20 * 1024 * 1024;
 
 const MARKER_TYPES = [
     'wildkamera',
@@ -335,37 +332,6 @@ switch ($action) {
             error_response(500, 'Daten konnten nicht gespeichert werden');
         }
         json_response(200, ['ok' => true, 'updatedAt' => $data['updatedAt']]);
-
-    case 'backup':
-        require_auth();
-        header('Content-Disposition: attachment; filename="jagdkarte-backup-'
-            . date('Ymd-His') . '.json"');
-        echo json_encode(
-            read_data(),
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-        );
-        exit;
-
-    case 'restore':
-        require_auth();
-        $f = $_FILES['file'] ?? null;
-        if (!$f || $f['error'] !== UPLOAD_ERR_OK || $f['size'] > MAX_RESTORE_BYTES) {
-            error_response(400, 'Keine Sicherungsdatei empfangen');
-        }
-        $raw = @file_get_contents($f['tmp_name']);
-        $parsed = json_decode((string) $raw, true);
-        if (!is_array($parsed)) {
-            error_response(400, 'Ungültige Sicherungsdatei');
-        }
-        $data = normalize_data($parsed);
-        if ($data === null) {
-            error_response(400, 'Sicherung enthält ungültige Daten');
-        }
-        $data['updatedAt'] = gmdate('c');
-        if (!write_data($data)) {
-            error_response(500, 'Sicherung konnte nicht gespeichert werden');
-        }
-        json_response(200, ['ok' => true]);
 
     default:
         error_response(404, 'Unbekannte Aktion');
