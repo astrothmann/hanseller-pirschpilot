@@ -153,6 +153,12 @@ export default function KarteContent() {
 
   const handleMarkerMoved = (id: string, latlng: L.LatLng) => {
     if (mode !== "edit" || !data) return;
+    if (!isInsideBoundary(latlng.lat, latlng.lng, data.boundary)) {
+      setOutsideHint(true);
+      window.setTimeout(() => setOutsideHint(false), 3000);
+      void load();
+      return;
+    }
     const now = new Date().toISOString();
     const next = {
       ...data,
