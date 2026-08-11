@@ -14,6 +14,7 @@ import {
   apiFetchData,
   apiSave,
   getToken,
+  isInsideBoundary,
   newId,
   setToken as persistToken,
   type JagdMapData,
@@ -32,8 +33,9 @@ export default function KarteContent() {
   const [typeSheetOpen, setTypeSheetOpen] = useState(false);
   const [banner, setBanner] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [pendingNewId, setPendingNewId] = useState<string | null>(null);
+
   const [editMode, setEditMode] = useState(false);
+  const [outsideHint, setOutsideHint] = useState(false);
   const mapRef = useRef<L.Map | null>(null);
 
   const loggedIn = token !== null;
@@ -119,25 +121,21 @@ export default function KarteContent() {
   };
 
   const handleDeselect = () => {
-    if (pendingNewId) {
-      setData((d) => (d ? { ...d, markers: d.markers.filter((m) => m.id !== pendingNewId) } : d));
-      setPendingNewId(null);
-    }
     setSelectedId(null);
     setSheetOpen(false);
   };
 
   const handleCloseSheet = () => {
-    if (pendingNewId) {
-      setData((d) => (d ? { ...d, markers: d.markers.filter((m) => m.id !== pendingNewId) } : d));
-      setPendingNewId(null);
-      setSelectedId(null);
-    }
     setSheetOpen(false);
   };
 
   const handleMapClick = (latlng: L.LatLng) => {
     if (mode !== "edit" || !addingType || !data) return;
+    if (!isInsideBoundary(latlng.lat, latlng.lng, data.boundary)) {
+      setOutsideHint(true);
+      window.setTimeout(() => setOutsideHint(false), 3000);
+      return;
+    }
     const now = new Date().toISOString();
     const marker: MapMarker = {
       id: newId(),
@@ -149,11 +147,8 @@ export default function KarteContent() {
       updatedAt: now,
     };
     const next = { ...data, markers: [...data.markers, marker] };
-    setData(next);
-    setPendingNewId(marker.id);
     setAddingType(null);
-    setSelectedId(marker.id);
-    setSheetOpen(true);
+    void persist(next);
   };
 
   const handleMarkerMoved = (id: string, latlng: L.LatLng) => {
@@ -171,7 +166,6 @@ export default function KarteContent() {
   const handleSaveMarker = (updated: MapMarker) => {
     if (!data) return;
     const next = { ...data, markers: data.markers.map((m) => (m.id === updated.id ? updated : m)) };
-    setPendingNewId(null);
     setSheetOpen(false);
     void persist(next);
   };
@@ -351,7 +345,9 @@ export default function KarteContent() {
             {addingType && mode === "edit" && (
               <div className="absolute inset-x-0 top-3 z-[500] flex justify-center pointer-events-none">
                 <span className="pointer-events-auto flex items-center gap-2 rounded-full bg-ink/85 text-white text-[12.5px] font-[700] px-3.5 py-1.5 shadow-[var(--shadow-m)]">
-                  Position für {MARKER_TYPE_BY_KEY[addingType].label} antippen
+                  {outsideHint
+                    ? "Nur innerhalb der Reviergrenzen möglich"
+                    : <>Position für {MARKER_TYPE_BY_KEY[addingType].label} antippen</>}
                   <button type="button" onClick={() => setAddingType(null)} className="text-white/80 underline">
                     Abbrechen
                   </button>
@@ -419,7 +415,7 @@ export default function KarteContent() {
         open={sheetOpen && !!selectedMarker}
         marker={selectedMarker}
         mode={mode === "edit" ? "edit" : "view"}
-        isNew={selectedMarker?.id === pendingNewId}
+        isNew={false}
         onClose={handleCloseSheet}
         onSave={handleSaveMarker}
         onDelete={handleDeleteMarker}

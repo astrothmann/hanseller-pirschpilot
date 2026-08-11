@@ -195,3 +195,21 @@ export async function apiSave(data: JagdMapData, token: string): Promise<void> {
     }),
   });
 }
+
+/** Ray-casting point-in-polygon test. */
+export function isInsideBoundary(
+  lat: number,
+  lng: number,
+  boundary: [number, number][] | null | undefined
+): boolean {
+  if (!boundary || boundary.length < 3) return true; // no boundary → allow anywhere
+  let inside = false;
+  for (let i = 0, j = boundary.length - 1; i < boundary.length; j = i++) {
+    const [yi, xi] = boundary[i];
+    const [yj, xj] = boundary[j];
+    if (yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
