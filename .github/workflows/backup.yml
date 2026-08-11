@@ -30,7 +30,8 @@ jobs:
           SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD }}
           REMOTE_DIR: ${{ secrets.STRATO_REMOTE_DIR }}
         run: |
-          echo "SNAPSHOT=jagdkarte-$(date -u +%Y%m%d-%H%M%S).json" >> "$GITHUB_ENV"
+          SNAPSHOT="jagdkarte-$(date -u +%Y%m%d-%H%M%S).json"
+          echo "SNAPSHOT=$SNAPSHOT" >> "$GITHUB_ENV"
           lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
           set net:max-retries 3
